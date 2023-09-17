@@ -1,0 +1,44 @@
+package nicstore.service;
+
+import nicstore.Models.Cart;
+import nicstore.Models.User;
+import nicstore.exceprions.auth.UserNotFoundException;
+import nicstore.repository.CartRepository;
+import nicstore.repository.UserRepository;
+import nicstore.security.Role;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+
+@Service
+public class UserService {
+
+    private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final CartRepository cartRepository;
+
+
+    @Autowired
+    public UserService(PasswordEncoder passwordEncoder, UserRepository userRepository, CartRepository cartRepository ) {
+        this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
+        this.cartRepository = cartRepository;
+    }
+
+    public User findUserByEmail(String email){
+        return userRepository.findUserByEmail(email).orElseThrow(()-> new UserNotFoundException("Пользователь с email" + email + " не найден"));
+    }
+
+    @Transactional
+    public void saveUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole(Role.ROLE_USER);
+        Cart cart = new Cart();
+        cart.setUser(user);
+        cartRepository.save(cart);
+        userRepository.save(user);
+    }
+
+}
