@@ -49,7 +49,7 @@ public class ProductService {
         productImageRepository.deleteAll(product.getImages());
         imageAdapter.deleteFolder(PATH_FOR_PRODUCT_IMAGE + "/" + product.getId());
         product.clearCategories();
-        reviewService.findReviewByProduct(product).forEach(review -> reviewService.deleteReview(review));// reviewService::deleteReview
+        reviewService.findReviewsByProduct(product).forEach(review -> reviewService.deleteReview(review));// reviewService::deleteReview
         imageAdapter.deleteFolder(PATH_FOR_REVIEW_IMAGE + "/product" + product.getId());
         ratingService.findRatingsByProduct(product).forEach(rating -> ratingService.deleteRating(rating)); //ratingService::deleteRating
         productRepository.delete(product);

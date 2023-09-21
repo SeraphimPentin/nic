@@ -1,6 +1,5 @@
 package nicstore.repository;
 
-import lombok.RequiredArgsConstructor;
 import nicstore.Models.Cart;
 import nicstore.Models.User;
 import org.springframework.data.jpa.repository.JpaRepository;

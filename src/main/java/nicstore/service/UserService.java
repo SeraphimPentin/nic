@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -29,6 +30,10 @@ public class UserService {
 
     public User findUserByEmail(String email){
         return userRepository.findUserByEmail(email).orElseThrow(()-> new UserNotFoundException("Пользователь с email" + email + " не найден"));
+    }
+
+    public List<User> findAllUsers(){
+        return userRepository.findAll();
     }
 
     @Transactional

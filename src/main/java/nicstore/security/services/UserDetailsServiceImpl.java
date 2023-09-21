@@ -1,7 +1,5 @@
 package nicstore.security.services;
 
-
-
 import nicstore.Models.User;
 import nicstore.exceprions.auth.EmailNotFoundException;
 import nicstore.repository.UserRepository;
@@ -25,7 +23,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetailsImpl loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findUserByEmail(email);
-        if (!user.isPresent()) throw new EmailNotFoundException("Пользователь с таким email не найден");
+        if (!user.isPresent()) throw new EmailNotFoundException("Пользователь с email "+ email + " не найден");
         return new UserDetailsImpl(user.get());
     }
 

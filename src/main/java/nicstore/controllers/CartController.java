@@ -24,8 +24,7 @@ public class CartController {
 
     @PatchMapping
     public ResponseEntity<Void> changeProductQuantityInCart(@RequestBody @Valid Long productId, @RequestParam(name = "op") String operation) {
-        cartService.changeNumberProductInCart(productId, operation);
+        cartService.changeQuantityProductInCart(productId, operation);
         return ResponseEntity.ok().build();
     }
-
 }

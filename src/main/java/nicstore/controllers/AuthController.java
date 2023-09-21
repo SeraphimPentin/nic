@@ -1,21 +1,18 @@
 package nicstore.controllers;
 
 
+import nicstore.Models.User;
 import nicstore.dto.auth.LoginRequest;
 import nicstore.dto.auth.RegisterRequest;
+import nicstore.dto.auth.UserInfoResponse;
 import nicstore.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Collections;
-import java.util.Map;
+import java.util.List;
 
 
 @RestController
@@ -30,26 +27,29 @@ public class AuthController {
     }
 
 
-//    @GetMapping("/show-user")
-//    @ResponseBody
-//    public String showUserInfo() {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-//        return userDetails.getUsername();
-//    }
+    @GetMapping("/show-authorized-user")
+    public String getCurrentAuthorizedUser() {
+        return authService.getCurrentAuthorizedUser().getUsername();
+    }
+
+    @GetMapping("/show-user-info")
+    public List<UserInfoResponse> showUserInfo() {
+        return authService.showUserInfo();
+    }
 
     @GetMapping("/show-user")
-    public ResponseEntity<String> showUserInfo() {
-        return ResponseEntity.ok(authService.getCurrentAuthentication().getPrincipal().toString());
+    public List<User> showUser() {
+        return authService.showUsers();
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<Map<String, String>> performRegistration(@RequestBody @Valid RegisterRequest registerRequest, BindingResult bindingResult) {
-        return new ResponseEntity<>(Collections.singletonMap("jwt-token", authService.register(registerRequest, bindingResult)), HttpStatus.OK);
+    @PostMapping( value = "/register", produces = "text/plain;charset=UTF-8")
+    public ResponseEntity<?> performRegistration(@RequestBody @Valid RegisterRequest registerRequest, BindingResult bindingResult) {
+        authService.register(registerRequest, bindingResult);
+        return ResponseEntity.ok("Регистрация пройдена");
     }
-
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> performLogin(@RequestBody @Valid LoginRequest loginRequest, BindingResult bindingResult) {
-        return new ResponseEntity<>(Collections.singletonMap("jwt-token", authService.login(loginRequest, bindingResult)), HttpStatus.OK);
+    public ResponseEntity<?> performLogin(@RequestBody @Valid LoginRequest loginRequest, BindingResult bindingResult) {
+        authService.login(loginRequest, bindingResult);
+        return ResponseEntity.ok("Авторизация пройдена");
     }
 }

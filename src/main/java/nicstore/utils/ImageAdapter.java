@@ -18,9 +18,7 @@ public class ImageAdapter {
     private static final Logger logger = LogManager.getLogger(ReviewService.class);
 
 
-
     public void saveImage(MultipartFile file, String path, String fileName) {
-        // Проверяем, что директория существует, иначе создаем ее
         File directory = new File(path);
         if (!directory.exists()) {
             directory.mkdirs();
@@ -38,7 +36,6 @@ public class ImageAdapter {
     }
 
 
-
     public void deleteFolder(String path) {
         try {
             FileUtils.deleteDirectory(new File(path));
@@ -47,7 +44,6 @@ public class ImageAdapter {
             throw new RuntimeException("Ошибка при удалении папки");
         }
     }
-
 
 
 }

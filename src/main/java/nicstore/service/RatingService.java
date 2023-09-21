@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +19,14 @@ public class RatingService {
 
     public List<Rating> findRatingsByProduct(Product product) {
         return ratingRepository.findRatingsByProduct(product);
+    }
+
+    public Rating findRatingByUserAndProduct(User user, Product product) {
+        return ratingRepository.findRatingByUserAndProduct(user, product);
+    }
+
+    public Integer findRatingsNumberByProduct(Product product) {
+        return ratingRepository.countRatingsByProduct(product);
     }
 
     public Double findAverageRatingByProduct(Product product) {

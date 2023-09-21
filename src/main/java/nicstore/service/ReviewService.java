@@ -36,7 +36,7 @@ public class ReviewService {
         return reviewRepository.findById(id);
     }
 
-    public List<Review> findReviewByProduct(Product product){
+    public List<Review> findReviewsByProduct(Product product){
         return reviewRepository.findReviewsByProduct(product);
     }
 
@@ -90,7 +90,4 @@ public class ReviewService {
         imageAdapter.deleteFolder(PATH_FOR_REVIEW_IMAGE + "/product" + review.getProduct().getId() + "/user" + review.getUser().getId());
         reviewRepository.delete(review);
     }
-
-
-
 }

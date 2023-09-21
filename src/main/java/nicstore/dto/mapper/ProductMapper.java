@@ -2,8 +2,6 @@ package nicstore.dto.mapper;
 
 import lombok.RequiredArgsConstructor;
 import nicstore.Models.Product;
-import nicstore.Models.User;
-import nicstore.dto.auth.RegisterRequest;
 import nicstore.dto.product.ProductResponse;
 import org.modelmapper.ModelMapper;
 

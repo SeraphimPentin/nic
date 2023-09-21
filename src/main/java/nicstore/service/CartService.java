@@ -1,22 +1,16 @@
 package nicstore.service;
 
-import com.sun.xml.bind.v2.schemagen.episode.SchemaBindings;
 import lombok.RequiredArgsConstructor;
-import net.bytebuddy.jar.asm.commons.Remapper;
 import nicstore.Models.Cart;
 import nicstore.Models.Product;
 import nicstore.Models.User;
-import nicstore.dto.auth.RegisterRequest;
 import nicstore.dto.auth.UserInfoResponse;
-import nicstore.dto.mapper.ProductMapper;
 import nicstore.dto.product.CartContentResponse;
 import nicstore.dto.product.ProductResponse;
 import nicstore.exceprions.*;
+import nicstore.exceprions.auth.UnauthorizedUserException;
 import nicstore.repository.CartRepository;
-import nicstore.repository.ProductRepository;
-import org.apache.catalina.mapper.Mapper;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -39,10 +33,18 @@ public class CartService {
 
     public CartContentResponse showCartContent() {
         User user = authService.getCurrentAuthorizedUser();
+        if (user == null) {
+            throw new UnauthorizedUserException("Пользователь не авторизован");
+        }
         Cart cart = findCartByUser(user);
+
+        if (cart.getItems().isEmpty()) {
+            throw new EmptyCartException("Корзина пуста");
+        }
+
         Map<ProductResponse, Integer> content = cart.getItems().entrySet().stream()
                 .collect(Collectors.toMap(entry -> convertToProductResponse(entry.getKey()), Map.Entry::getValue));
-        return new CartContentResponse(convertToUserInfoResponse(user), content);
+        return new CartContentResponse(convertToUserInfoResponse(user), content) ;
     }
 
     @Transactional
@@ -59,7 +61,7 @@ public class CartService {
     }
 
     @Transactional
-    public void changeNumberProductInCart(Long productId, String operator) {
+    public void changeQuantityProductInCart(Long productId, String operator) {
         User user = authService.getCurrentAuthorizedUser();
         Cart cart = findCartByUser(user);
         Product product = productService.findProductById(productId);
