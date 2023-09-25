@@ -29,11 +29,11 @@ public class User implements UserDetails {
 
     @NotBlank(message = "Введите имя")
     @Size(max = 100, message = "Максимум 100 символов")
-    private String firstName;
+    private String firstname;
 
     @NotBlank(message = "Введите фамилию")
     @Size(max = 100, message = "Максимум 100 символов")
-    private String lastName;
+    private String lastname;
 
     @NotBlank(message = "Email не указан")
     @Size(max = 100, message = "Максимум 100 символов")
