@@ -2,15 +2,16 @@ package nicstore.controllers;
 
 
 import nicstore.Models.User;
-import nicstore.dto.auth.LoginRequest;
-import nicstore.dto.auth.RegisterRequest;
-import nicstore.dto.auth.UserInfoResponse;
+import nicstore.dto.auth.*;
 import nicstore.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.security.auth.message.AuthException;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -29,7 +30,8 @@ public class AuthController {
 
     @GetMapping("/show-authorized-user")
     public String getCurrentAuthorizedUser() {
-        return authService.getCurrentAuthorizedUser().getUsername();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName();
     }
 
     @GetMapping("/show-user-info")
@@ -47,9 +49,9 @@ public class AuthController {
         authService.register(registerRequest, bindingResult);
         return ResponseEntity.ok("Регистрация пройдена");
     }
-    @PostMapping("/login")
-    public ResponseEntity<?> performLogin(@RequestBody @Valid LoginRequest loginRequest, BindingResult bindingResult) {
-        authService.login(loginRequest, bindingResult);
+    @PostMapping(value = "/login", produces = "text/plain;charset=UTF-8")
+    public ResponseEntity<?> performLogin(@RequestBody @Valid UsernameAndPasswordAuthenticationRequest loginRequest) throws AuthException {
+        authService.login(loginRequest);
         return ResponseEntity.ok("Авторизация пройдена");
     }
 }

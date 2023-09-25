@@ -6,8 +6,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-
-//@Data
 @Getter
 @Setter
 @Builder
@@ -17,11 +15,11 @@ public class RegisterRequest {
 
     @NotBlank(message = "Введите имя")
     @Size(max = 100, message = "Максимум 100 символов")
-    private String firstName;
+    private String firstname;
 
     @NotBlank(message = "Введите фамилию")
     @Size(max = 100, message = "Максимум 100 символов")
-    private String lastName;
+    private String lastname;
 
     @NotBlank(message = "Email не указан")
     @Size(max = 100, message = "Максимум 100 символов")

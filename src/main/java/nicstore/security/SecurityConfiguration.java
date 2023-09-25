@@ -2,10 +2,10 @@ package nicstore.security;
 
 
 import nicstore.security.jwt.JwtAuthFilter;
+import nicstore.security.jwt.JwtAuthenticationEntryPoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,33 +23,29 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 public class SecurityConfiguration {
 
     private final JwtAuthFilter jwtAuthFilter;
-    private  AuthenticationProvider authenticationProvider;
+    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
 
     public SecurityConfiguration(JwtAuthFilter jwtAuthFilter) {
         this.jwtAuthFilter = jwtAuthFilter;
     }
     @Bean
-    public SecurityFilterChain  securityFilterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-//                .antMatchers("/admin").hasRole("ADMIN")
-                .antMatcher("auth/login")
-                .antMatcher("auth/register")
-                .antMatcher( "/error")
-                .formLogin().loginPage("/auth/login")
-                .defaultSuccessUrl("/hello", true)
-                .failureUrl("/auth/login?error")
+                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and()
-                .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/auth/login")
+                .authorizeRequests()
+                .antMatchers("/admin/*").hasRole("ADMIN")
+                .antMatchers("/auth/register", "/auth/login").permitAll()
+                .anyRequest().authenticated()
                 .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
+                .formLogin().loginPage("/login")
+                .and()
+                .logout().logoutSuccessUrl("/login")
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-
         return http.build();
     }
 

@@ -44,7 +44,7 @@ public class ShopService {
         for (Review review : reviewsList) {
             ReviewResponse reviewResponse = convertToReviewResponse(review);
             User author = review.getUser();
-            reviewResponse.setUser(author.getFirstName() + " " + author.getLastName());
+            reviewResponse.setUser(author.getFirstname() + " " + author.getLastname());
             reviewResponses.add(reviewResponse);
         }
         productCharacteristicsResponse.setReviews(reviewResponses);
@@ -91,7 +91,6 @@ public class ShopService {
         User user = authService.getCurrentAuthorizedUser();
         ratingService.saveRating(user, product, value);
     }
-
 
 
     public void deleteRating(Long productId){

@@ -27,7 +27,6 @@ public class Product {
     @Size(max = 255, message = "Название товара не более 255 символов")
     private String name;
 
-    @NotBlank
     @Size(max = 2048, message = "Описание товара не более 2048 символов")
     @Column(columnDefinition = "TEXT")
     private String description;

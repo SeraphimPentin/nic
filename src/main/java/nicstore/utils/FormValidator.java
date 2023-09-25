@@ -18,7 +18,7 @@ public class FormValidator {
             for (FieldError fieldError : bindingResult.getFieldErrors()) {
                 errors.put(fieldError.getField(), fieldError.getDefaultMessage());
             }
-            throw new FormException(errors); // todo согласовать с фронтом обработку ошибок в форме
+            throw new FormException(errors);
         }
     }
 
