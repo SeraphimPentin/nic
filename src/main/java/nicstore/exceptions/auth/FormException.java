@@ -1,4 +1,4 @@
-package nicstore.exceprions.auth;
+package nicstore.exceptions.auth;
 
 import java.util.Map;
 

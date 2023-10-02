@@ -2,11 +2,10 @@ package nicstore.service;
 
 import lombok.RequiredArgsConstructor;
 import nicstore.Models.User;
-import nicstore.dto.auth.JwtResponse;
 import nicstore.dto.auth.UsernameAndPasswordAuthenticationRequest;
 import nicstore.dto.auth.RegisterRequest;
 import nicstore.dto.auth.UserInfoResponse;
-import nicstore.exceprions.auth.UserNotFoundException;
+import nicstore.exceptions.auth.UserNotFoundException;
 import nicstore.security.JwtAuthentication;
 import nicstore.security.jwt.JwtUtil;
 import nicstore.utils.FormValidator;

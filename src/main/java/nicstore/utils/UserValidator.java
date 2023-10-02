@@ -12,7 +12,7 @@ import org.springframework.validation.Validator;
 @Component
 public class UserValidator implements Validator {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public UserValidator(UserRepository userRepository) {
         this.userRepository = userRepository;

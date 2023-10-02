@@ -1,6 +1,6 @@
 package nicstore.utils;
 
-import nicstore.exceprions.ImageUploadException;
+import nicstore.exceptions.ImageUploadException;
 import nicstore.service.ReviewService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.*;

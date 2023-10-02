@@ -2,7 +2,7 @@ package nicstore.service;
 
 import lombok.RequiredArgsConstructor;
 import nicstore.Models.Category;
-import nicstore.exceprions.CategoryNotFoundException;
+import nicstore.exceptions.CategoryNotFoundException;
 import nicstore.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 

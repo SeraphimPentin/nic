@@ -7,7 +7,7 @@ import nicstore.Models.Review;
 import nicstore.Models.User;
 import nicstore.dto.product.ProductCharacteristicsResponse;
 import nicstore.dto.product.ReviewResponse;
-import nicstore.exceprions.ReviewNotExistingException;
+import nicstore.exceptions.ReviewNotExistingException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,8 +29,6 @@ public class ShopService {
     private ModelMapper modelMapper;
 
     private final Map<String, List<String>> categoriesCache = new HashMap<>();
-
-
 
 
     public ProductCharacteristicsResponse getProductPage(Long productId) {
@@ -107,5 +105,4 @@ public class ShopService {
     private ReviewResponse convertToReviewResponse(Review review) {
         return modelMapper.map(review, ReviewResponse.class);
     }
-
 }

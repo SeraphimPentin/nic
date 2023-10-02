@@ -1,4 +1,4 @@
-package nicstore.exceprions.auth;
+package nicstore.exceptions.auth;
 
 public class UserFailedAuthenticationException extends  RuntimeException{
 

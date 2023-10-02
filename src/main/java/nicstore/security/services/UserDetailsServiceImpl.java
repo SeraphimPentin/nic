@@ -1,7 +1,7 @@
 package nicstore.security.services;
 
 import nicstore.Models.User;
-import nicstore.exceprions.auth.EmailNotFoundException;
+import nicstore.exceptions.auth.EmailNotFoundException;
 import nicstore.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;

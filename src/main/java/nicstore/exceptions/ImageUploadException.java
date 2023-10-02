@@ -1,4 +1,4 @@
-package nicstore.exceprions;
+package nicstore.exceptions;
 
 public class ImageUploadException extends RuntimeException {
 

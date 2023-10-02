@@ -39,7 +39,7 @@ public class ShopController {
         return ResponseEntity.ok(shopService.getProductPage(productId));
     }
 
-    @GetMapping("/{productId}/edit-review") // получить содержимое отзыва для редактирования
+    @GetMapping("/{productId}/edit-review")
     public ResponseEntity<ReviewResponse> getReviewDTOForEditing(@PathVariable Long productId) {
         return ResponseEntity.ok(shopService.getReviewDTOForEditing(productId));
     }

@@ -11,7 +11,6 @@ public class ProductMapper {
 
     private final ModelMapper modelMapper;
 
-
     private ProductResponse convertProductToProductResponse(Product product, ProductResponse productResponse) {
         return modelMapper.map(product, ProductResponse.class);
     }
