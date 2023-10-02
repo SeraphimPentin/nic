@@ -216,7 +216,7 @@ public class StoreApplication implements WebMvcConfigurer {
                     }}).price(BigDecimal.valueOf(44999.0)).quantity(15).build(),
                     Product.builder().id(19L).name("Смартфон OnePlus 11").categories(new HashSet<Category>() {{
                         add(categories[0]);
-                    }}).price(BigDecimal.valueOf(69999.0)).quantity(5).build(), // todo no photo!!
+                    }}).price(BigDecimal.valueOf(69999.0)).quantity(5).build(),
 					Product.builder().id(20L).name("TWS-наушники Apple AirPods Pro").images(Collections.singletonList(images[24])).categories(new HashSet<Category>() {{
 						add(audioHeadphones[0]);
 						add(addGoodsForSmartphones[0]);
