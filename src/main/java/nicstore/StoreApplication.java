@@ -330,7 +330,6 @@ public class StoreApplication implements WebMvcConfigurer {
             categoryRepo.saveAll(Arrays.asList(addGoodsForSmartphones));
             categoryRepo.saveAll(Arrays.asList(audio));
             categoryRepo.saveAll(Arrays.asList(audioHeadphones));
-//            categoryRepo.saveAll(Arrays.asList(addGoodsForTelevisions));
             categoryRepo.saveAll(Arrays.asList(smartphonesHeadphones));
             categoryRepo.saveAll(Arrays.asList(televisions));
             productRepo.saveAll(Arrays.asList(products));
