@@ -22,10 +22,11 @@ public class ShopController {
     private final CartService cartService;
 
 
-    @PutMapping
-    public ResponseEntity<Void> addProductToCart(Long productId) {
+    @PostMapping(path = "{productId}")
+    public ResponseEntity<Void> addProductToCart(@PathVariable("productId") Long productId) {
         cartService.addProductToCart(productId);
-        return ResponseEntity.ok().build();
+//        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().build(); // todo DTO class for answer
     }
 
     @PatchMapping

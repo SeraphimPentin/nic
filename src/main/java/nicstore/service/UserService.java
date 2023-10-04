@@ -2,6 +2,8 @@ package nicstore.service;
 
 import nicstore.Models.Cart;
 import nicstore.Models.User;
+import nicstore.dto.auth.RegisterRequest;
+import nicstore.exceptions.auth.UserAlreadyExistException;
 import nicstore.exceptions.auth.UserNotFoundException;
 import nicstore.repository.CartRepository;
 import nicstore.repository.UserRepository;
@@ -28,8 +30,14 @@ public class UserService {
         this.cartRepository = cartRepository;
     }
 
+    public void emailAlreadyExist(RegisterRequest registerRequest){
+       if (userRepository.findUserByEmail(registerRequest.getEmail()).isPresent()){
+           throw new UserAlreadyExistException("Пользвоатель с почтой " + registerRequest.getEmail() + " уже зарегистрирован");
+       }
+    }
+
     public User findUserByEmail(String email){
-        return userRepository.findUserByEmail(email).orElseThrow(()-> new UserNotFoundException("Пользователь с email" + email + " не найден"));
+        return userRepository.findUserByEmail(email).orElseThrow(()-> new UserNotFoundException("Пользователь с email " + email + " не найден"));
     }
 
     public List<User> findAllUsers(){

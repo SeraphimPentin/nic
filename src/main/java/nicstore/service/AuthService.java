@@ -2,22 +2,18 @@ package nicstore.service;
 
 import lombok.RequiredArgsConstructor;
 import nicstore.Models.User;
-import nicstore.dto.auth.UsernameAndPasswordAuthenticationRequest;
-import nicstore.dto.auth.RegisterRequest;
-import nicstore.dto.auth.UserInfoResponse;
+import nicstore.dto.auth.*;
 import nicstore.exceptions.auth.UserNotFoundException;
-import nicstore.security.JwtAuthentication;
-import nicstore.security.jwt.JwtUtil;
+import nicstore.security.jwt.JwtService;
 import nicstore.utils.FormValidator;
 import nicstore.utils.UserValidator;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,21 +22,22 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AuthService {
 
-    private final AuthenticationManager authenticationManager;
+
     private final UserService userService;
     private final UserValidator userValidator;
-    private final JwtUtil jwtUtil;
     private final ModelMapper modelMapper;
     private final FormValidator formValidator;
+    private final JwtService jwtService;
+    private final AuthenticationManager authenticationManager;
 
-
-    public JwtAuthentication getCurrentAuthentication() {
-        return (JwtAuthentication) SecurityContextHolder.getContext().getAuthentication();
+    public Authentication getCurrentAuthentication() {
+        return SecurityContextHolder.getContext().getAuthentication();
     }
+
     public User getCurrentAuthorizedUser() {
-        JwtAuthentication authentication = getCurrentAuthentication();
-        if (authentication != null && authentication.getEmail() != null) {
-            return userService.findUserByEmail(getCurrentAuthentication().getEmail());
+        Authentication authentication = getCurrentAuthentication();
+        if (authentication != null && authentication.getPrincipal() != null)  {
+            return userService.findUserByEmail(getCurrentAuthentication().getName());
         } else {
             throw new UserNotFoundException("Пользоатель не найден");
         }
@@ -50,15 +47,14 @@ public class AuthService {
         return userService.findAllUsers();
     }
 
-    public List<UserInfoResponse> showUserInfo() {
+    public List<UserResponse> showUserInfo() {
         List<User> users = userService.findAllUsers();
-        List<UserInfoResponse> userInfoResponses = new ArrayList<>();
-
+        List<UserResponse> userRespons = new ArrayList<>();
         for (User user : users) {
-            UserInfoResponse userInfoResponse = convertToUserInfoResponse(user);
-            userInfoResponses.add(userInfoResponse);
+            UserResponse userResponse = convertToUserInfoResponse(user);
+            userRespons.add(userResponse);
         }
-        return userInfoResponses;
+        return userRespons;
     }
 
     public String getUsernameCurrentUser() {
@@ -67,31 +63,45 @@ public class AuthService {
     }
 
 
-    public String register(RegisterRequest registerRequest, BindingResult bindingResult) {
-        userValidator.validate(registerRequest, bindingResult);
-        formValidator.checkFormBindingResult(bindingResult);
-        User user = convertRegisterRequestToUser(registerRequest);
+//    public String register(RegisterRequest registerRequest, BindingResult bindingResult) {
+//        userValidator.validate(registerRequest, bindingResult);
+//        formValidator.checkFormBindingResult(bindingResult);
+//        User user = convertRegisterRequestToUser(registerRequest);
+//        userService.saveUser(user);
+//        return jwtUtil.generateToken(registerRequest.getEmail());
+//    }
+
+    public String register(@RequestBody RegisterRequest request) {
+
+        userService.emailAlreadyExist(request);
+        User user = convertRegisterRequestToUser(request);
         userService.saveUser(user);
-        return jwtUtil.generateToken(registerRequest.getEmail());
+        String jwtToken = jwtService.generateToken(user);
+        return jwtToken;
+//        return AuthenticationResponse.builder()
+//                .token(jwtToken)
+//                .build();
     }
 
-    public void login(UsernameAndPasswordAuthenticationRequest usernameAndPasswordAuthenticationRequest) {
-        UsernamePasswordAuthenticationToken authInputToken = new UsernamePasswordAuthenticationToken(
-                usernameAndPasswordAuthenticationRequest.getEmail(),
-                usernameAndPasswordAuthenticationRequest.getPassword()
+    public AuthenticationResponse login(@RequestBody AuthenticationRequest request) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(),
+                        request.getPassword()
+                )
         );
-        try {
-            authenticationManager.authenticate(authInputToken);
-        } catch (BadCredentialsException e) {
-            throw new BadCredentialsException("Введены неверные данные");
-        }
+        User user = userService.findUserByEmail(request.getEmail());
+        String jwtToken = jwtService.generateToken(user);
+        return AuthenticationResponse.builder()
+                .token(jwtToken)
+                .build();
     }
 
     private User convertRegisterRequestToUser(RegisterRequest registerRequest) {
         return modelMapper.map(registerRequest, User.class);
     }
 
-    public UserInfoResponse convertToUserInfoResponse(User user) {
-        return modelMapper.map(user, UserInfoResponse.class);
+    public UserResponse convertToUserInfoResponse(User user) {
+        return modelMapper.map(user, UserResponse.class);
     }
 }

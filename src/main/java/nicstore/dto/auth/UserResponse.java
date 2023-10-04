@@ -1,14 +1,17 @@
 package nicstore.dto.auth;
 
-import lombok.Data;
+import lombok.*;
 import nicstore.security.Role;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserResponse {
 
+    private String email;
     private String firstname;
     private String lastname;
-    private String email;
     private Role role;
 
 }

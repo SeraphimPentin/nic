@@ -1,8 +1,10 @@
 package nicstore.security;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
+@Getter
 @RequiredArgsConstructor
 public enum Role implements GrantedAuthority {
 	ROLE_ADMIN("ROLE_ADMIN"),
@@ -19,7 +21,4 @@ public enum Role implements GrantedAuthority {
 		this.role = role;
 	}
 
-	public String getRole() {
-		return role;
-	}
 }

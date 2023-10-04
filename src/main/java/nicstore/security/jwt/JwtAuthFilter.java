@@ -1,10 +1,12 @@
 package nicstore.security.jwt;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import nicstore.security.services.UserDetailsImpl;
-import nicstore.security.services.UserDetailsServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -16,15 +18,11 @@ import javax.validation.constraints.NotNull;
 import java.io.IOException;
 
 @Component
+@RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
 
-    private final JwtUtil jwtUtil;
-    private final UserDetailsServiceImpl userDetailsServiceImpl;
-
-    public JwtAuthFilter(JwtUtil jwtUtil, UserDetailsServiceImpl userDetailsServiceImpl) {
-        this.jwtUtil = jwtUtil;
-        this.userDetailsServiceImpl = userDetailsServiceImpl;
-    }
+    private final JwtService jwtService;
+    private final UserDetailsService userDetailsService;
 
     @Override
     protected void doFilterInternal(
@@ -33,25 +31,29 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             @NotNull FilterChain filterChain)
             throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorization");
+        final String jwt;
+        final String userEmail;
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            String jwt = authHeader.substring(7);
+            jwt = authHeader.substring(7);
 
             if (jwt.isEmpty()) {
                 response.sendError(response.SC_BAD_REQUEST, "Invalid JWT Token Bearer Header");
             } else {
                 try {
-
-                    String email = jwtUtil.validateTokenAndRetrieveToken(jwt);
-//                    UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-                    UserDetailsImpl userDetailsImpl = userDetailsServiceImpl.loadUserByUsername(email);
-
-                    UsernamePasswordAuthenticationToken authToken =
-                            new UsernamePasswordAuthenticationToken(
-                                    userDetailsImpl,
-                                    userDetailsImpl.getPassword(),
-                                    userDetailsImpl.getAuthorities());
-                    if (SecurityContextHolder.getContext().getAuthentication() != null) {
-                        SecurityContextHolder.getContext().setAuthentication(authToken);
+                    userEmail = jwtService.extractUsername(jwt);
+                    if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                        UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+                        if (jwtService.isTokenValid(jwt, userDetails)) {
+                            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                                    userDetails,
+                                    null,
+                                    userDetails.getAuthorities()
+                            );
+                            authToken.setDetails(
+                                    new WebAuthenticationDetailsSource().buildDetails(request)
+                            );
+                            SecurityContextHolder.getContext().setAuthentication(authToken);
+                        }
                     }
                 } catch (JWTVerificationException exc) {
                     response.sendError(response.SC_BAD_REQUEST, "Invalid JWT Token");

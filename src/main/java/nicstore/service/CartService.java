@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import nicstore.Models.Cart;
 import nicstore.Models.Product;
 import nicstore.Models.User;
-import nicstore.dto.auth.UserInfoResponse;
+import nicstore.dto.auth.UserResponse;
 import nicstore.dto.product.CartContentResponse;
 import nicstore.dto.product.ProductResponse;
 import nicstore.exceptions.*;
@@ -93,8 +93,8 @@ public class CartService {
         return modelMapper.map(product, ProductResponse.class);
     }
 
-    private UserInfoResponse convertToUserInfoResponse(User user) {
-        return modelMapper.map(user, UserInfoResponse.class);
+    private UserResponse convertToUserInfoResponse(User user) {
+        return modelMapper.map(user, UserResponse.class);
     }
 
 }

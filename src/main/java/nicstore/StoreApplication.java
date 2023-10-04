@@ -319,10 +319,6 @@ public class StoreApplication implements WebMvcConfigurer {
                         add(televisions[2]);
 					}}).price(BigDecimal.valueOf(4199.0)).quantity(3).build(),
 
-
-
-
-
             };
             productImageRepo.saveAll(Arrays.asList(images));
             categoryRepo.saveAll(Arrays.asList(categories));

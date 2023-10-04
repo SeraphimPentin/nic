@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import nicstore.dto.auth.UserInfoResponse;
+import nicstore.dto.auth.UserResponse;
 
 import java.util.Map;
 
@@ -14,7 +14,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class CartContentResponse {
 
-    private UserInfoResponse userInfoResponse;
+    private UserResponse userResponse;
     private Map<ProductResponse, Integer> items;
 
 

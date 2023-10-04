@@ -6,9 +6,6 @@ import nicstore.dto.auth.*;
 import nicstore.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.security.auth.message.AuthException;
@@ -27,15 +24,13 @@ public class AuthController {
         this.authService = authService;
     }
 
-
     @GetMapping("/show-authorized-user")
     public String getCurrentAuthorizedUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return authentication.getName();
+       return authService.getCurrentAuthorizedUser().getUsername();
     }
 
     @GetMapping("/show-user-info")
-    public List<UserInfoResponse> showUserInfo() {
+    public List<UserResponse> showUserInfo() {
         return authService.showUserInfo();
     }
 
@@ -45,12 +40,11 @@ public class AuthController {
     }
 
     @PostMapping( value = "/register", produces = "text/plain;charset=UTF-8")
-    public ResponseEntity<?> performRegistration(@RequestBody @Valid RegisterRequest registerRequest, BindingResult bindingResult) {
-        authService.register(registerRequest, bindingResult);
-        return ResponseEntity.ok("Регистрация пройдена");
+    public ResponseEntity<String> performRegistration(@RequestBody @Valid RegisterRequest registerRequest) {
+        return ResponseEntity.ok(authService.register(registerRequest));
     }
     @PostMapping(value = "/login", produces = "text/plain;charset=UTF-8")
-    public ResponseEntity<?> performLogin(@RequestBody @Valid UsernameAndPasswordAuthenticationRequest loginRequest) throws AuthException {
+    public ResponseEntity<?> performLogin(@RequestBody @Valid AuthenticationRequest loginRequest) throws AuthException {
         authService.login(loginRequest);
         return ResponseEntity.ok("Авторизация пройдена");
     }

@@ -1,6 +1,5 @@
 package nicstore.utils;
 
-
 import nicstore.exceptions.auth.FormException;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
