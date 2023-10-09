@@ -5,17 +5,15 @@ import nicstore.Models.Product;
 import nicstore.Models.Rating;
 import nicstore.Models.Review;
 import nicstore.Models.User;
+import nicstore.dto.mapper.ConvertorMapper;
 import nicstore.dto.product.ProductCharacteristicsResponse;
 import nicstore.dto.product.ReviewResponse;
 import nicstore.exceptions.ReviewNotExistingException;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -26,21 +24,19 @@ public class ShopService {
     private final ProductService productService;
     private final RatingService ratingService;
     private final ReviewService reviewService;
-    private ModelMapper modelMapper;
-
-    private final Map<String, List<String>> categoriesCache = new HashMap<>();
+    private final ConvertorMapper mapper;
 
 
     public ProductCharacteristicsResponse getProductPage(Long productId) {
         Product product = productService.findProductById(productId);
-        ProductCharacteristicsResponse productCharacteristicsResponse = convertToProductCharacteristics(product);
+        ProductCharacteristicsResponse productCharacteristicsResponse = mapper.getMapper().map(product, ProductCharacteristicsResponse.class);
         productCharacteristicsResponse.setNumberRatings(ratingService.findRatingsNumberByProduct(product));
         productCharacteristicsResponse.setAverageRating(ratingService.findAverageRatingByProduct(product));
 
         List<Review> reviewsList = reviewService.findReviewsByProduct(product);
         List<ReviewResponse> reviewResponses = new ArrayList<>();
         for (Review review : reviewsList) {
-            ReviewResponse reviewResponse = convertToReviewResponse(review);
+            ReviewResponse reviewResponse = mapper.getMapper().map(review, ReviewResponse.class);
             User author = review.getUser();
             reviewResponse.setUser(author.getFirstname() + " " + author.getLastname());
             reviewResponses.add(reviewResponse);
@@ -48,7 +44,6 @@ public class ShopService {
         productCharacteristicsResponse.setReviews(reviewResponses);
         productCharacteristicsResponse.setNumberReviews(reviewsList.size());
         return productCharacteristicsResponse;
-
     }
 
     public void setReviewOnProduct(Long productId, String comment, List<MultipartFile> images) {
@@ -63,7 +58,7 @@ public class ShopService {
         Review existingReview = reviewService.findReviewByUserAndProduct(user, product).orElseThrow(()
                 -> new ReviewNotExistingException("Вы еще  не писали отзыв на этот товар"));
         reviewService.deleteReview(existingReview);
-        return convertToReviewResponse(existingReview);
+        return mapper.getMapper().map(existingReview, ReviewResponse.class);
 
     }
     public void editExistingReview(Long productId, String comment, List<MultipartFile> images) {
@@ -96,13 +91,5 @@ public class ShopService {
         User user = authService.getCurrentAuthorizedUser();
         Rating currentRating = ratingService.findRatingByUserAndProduct(user, product);
         ratingService.deleteRating(currentRating);
-    }
-
-    private ProductCharacteristicsResponse convertToProductCharacteristics(Product product) {
-        return modelMapper.map(product, ProductCharacteristicsResponse.class);
-    }
-
-    private ReviewResponse convertToReviewResponse(Review review) {
-        return modelMapper.map(review, ReviewResponse.class);
     }
 }

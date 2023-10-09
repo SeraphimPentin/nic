@@ -5,17 +5,17 @@ import nicstore.Models.Cart;
 import nicstore.Models.Product;
 import nicstore.Models.User;
 import nicstore.dto.auth.UserResponse;
+import nicstore.dto.mapper.ConvertorMapper;
 import nicstore.dto.product.CartContentResponse;
 import nicstore.dto.product.ProductResponse;
 import nicstore.exceptions.*;
 import nicstore.exceptions.auth.UnauthorizedUserException;
 import nicstore.repository.CartRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +24,7 @@ public class CartService {
     private final CartRepository cartRepository;
     private final AuthService authService;
     private final ProductService productService;
-    private final ModelMapper modelMapper;
+    private final ConvertorMapper mapper;
 
 
     public Cart findCartByUser(User user) {
@@ -41,10 +41,14 @@ public class CartService {
         if (cart.getItems().isEmpty()) {
             throw new EmptyCartException("Корзина пуста");
         }
+        Map<ProductResponse, Integer> content = new HashMap<>();
 
-        Map<ProductResponse, Integer> content = cart.getItems().entrySet().stream()
-                .collect(Collectors.toMap(entry -> convertToProductResponse(entry.getKey()), Map.Entry::getValue));
-        return new CartContentResponse(convertToUserInfoResponse(user), content) ;
+        for (Map.Entry<Product, Integer> entry : cart.getItems().entrySet()) {
+            ProductResponse productShortResponse = mapper.getMapper().map(entry.getKey(), ProductResponse.class);
+            Integer value = entry.getValue();
+            content.put(productShortResponse, value);
+        }
+        return new CartContentResponse(mapper.getMapper().map(user, UserResponse.class), content) ;
     }
 
     @Transactional
@@ -87,15 +91,5 @@ public class CartService {
         }
         cartRepository.save(cart);
     }
-
-
-    private ProductResponse convertToProductResponse(Product product) {
-        return modelMapper.map(product, ProductResponse.class);
-    }
-
-    private UserResponse convertToUserInfoResponse(User user) {
-        return modelMapper.map(user, UserResponse.class);
-    }
-
 }
 

@@ -1,9 +1,7 @@
 package nicstore.controllers;
 
 import lombok.RequiredArgsConstructor;
-import nicstore.dto.product.CommentRequest;
-import nicstore.dto.product.ProductCharacteristicsResponse;
-import nicstore.dto.product.ReviewResponse;
+import nicstore.dto.product.*;
 import nicstore.service.CartService;
 import nicstore.service.ShopService;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +21,9 @@ public class ShopController {
 
 
     @PostMapping(path = "{productId}")
-    public ResponseEntity<Void> addProductToCart(@PathVariable("productId") Long productId) {
+    public ResponseEntity<AddedProductToCartResponse> addProductToCart(@PathVariable("productId") Long productId) {
         cartService.addProductToCart(productId);
-//        return ResponseEntity.ok().build();
-        return ResponseEntity.ok().build(); // todo DTO class for answer
+        return ResponseEntity.ok(new AddedProductToCartResponse(productId));
     }
 
     @PatchMapping
@@ -40,15 +37,27 @@ public class ShopController {
         return ResponseEntity.ok(shopService.getProductPage(productId));
     }
 
+    @PostMapping(value = "/{productId}/post-review", produces = "text/plain;charset=UTF-8")
+    public ResponseEntity<?> postReview(
+            @PathVariable Long productId,
+            @RequestParam(name = "comment") @Valid CommentRequest comment,
+            @RequestParam(name = "files", required = false) List<MultipartFile> files
+            ){
+        shopService.setReviewOnProduct(productId, comment.getComment(), files);
+        return ResponseEntity.ok("Отзыв добавлен");
+    }
+
     @GetMapping("/{productId}/edit-review")
     public ResponseEntity<ReviewResponse> getReviewDTOForEditing(@PathVariable Long productId) {
         return ResponseEntity.ok(shopService.getReviewDTOForEditing(productId));
     }
 
     @PatchMapping(value = "/{productId}/edit-review", produces = "text/plain;charset=UTF-8")
-    public ResponseEntity<?> editReview(@RequestPart(name = "comment") @Valid CommentRequest comment,
-                                        @RequestPart(name = "files", required = false) List<MultipartFile> files,
-                                        @PathVariable Long productId) {
+    public ResponseEntity<?> editReview(
+            @RequestPart(name = "comment") @Valid CommentRequest comment,
+            @RequestPart(name = "files", required = false) List<MultipartFile> files,
+            @PathVariable Long productId
+    ) {
         shopService.editExistingReview(productId, comment.getComment(), files);
         return ResponseEntity.ok("Ваш отзыв изменен!");
     }
@@ -65,4 +74,12 @@ public class ShopController {
         return ResponseEntity.ok("Отзыв удален");
     }
 
+    @PostMapping(path = "{productId}/add-rating")
+    public ResponseEntity<RatingResponse> addRatingToProduct(
+            @PathVariable("productId") Long productId,
+            @RequestParam(name = "value") Integer value
+    ) {
+        shopService.setRatingOnProduct(productId, value);
+        return ResponseEntity.ok(new RatingResponse(productId, value));
+    }
 }
