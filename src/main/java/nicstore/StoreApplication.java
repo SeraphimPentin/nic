@@ -6,7 +6,6 @@ import nicstore.Models.ProductImage;
 import nicstore.repository.CategoryRepository;
 import nicstore.repository.ProductImageRepository;
 import nicstore.repository.ProductRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
@@ -28,12 +27,6 @@ public class StoreApplication implements WebMvcConfigurer {
     public static void main(String[] args) {
         SpringApplication.run(StoreApplication.class, args);
     }
-
-    @Bean
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
-    }
-
 
     @Bean
     public ApplicationRunner dataLoader(CategoryRepository categoryRepo,
@@ -123,24 +116,19 @@ public class StoreApplication implements WebMvcConfigurer {
 					ProductImage.builder().id(40L).path(PATH_FOR_PRODUCTS_IMAGE + "/35/yandexstationmini.jpg").name("Яндекс Станция мини").build(),
 					ProductImage.builder().id(41L).path(PATH_FOR_PRODUCTS_IMAGE + "/36/fierobhs-100.jpg").name("Fiero BHS-100").build(),
 					ProductImage.builder().id(42L).path(PATH_FOR_PRODUCTS_IMAGE + "/37/edifiers3000pro.jpg").name("Edifier S3000Pro").build(),
-
                     ProductImage.builder().id(43L).path(PATH_FOR_PRODUCTS_IMAGE + "/38/ledxiaomimitvp132.jpg").name("Xiaomi MI TV P1 32").build(),
 					ProductImage.builder().id(44L).path(PATH_FOR_PRODUCTS_IMAGE + "/39/ledxiaomimitvp132.jpg").name("LG 32LM576BPLD").build(),
 					ProductImage.builder().id(45L).path(PATH_FOR_PRODUCTS_IMAGE + "/40/dexpa321.jpg").name("DEXP A321").build(),
-
 					ProductImage.builder().id(46L).path(PATH_FOR_PRODUCTS_IMAGE + "/41/lglhb655nk.jpg").name("Домашний кинотеатр LG LHB655NK").build(),
 					ProductImage.builder().id(47L).path(PATH_FOR_PRODUCTS_IMAGE + "/41/lglhb655nk-2.jpg").name("Домашний кинотеатр LG LHB655NK").build(),
 					ProductImage.builder().id(48L).path(PATH_FOR_PRODUCTS_IMAGE + "/42/rombicarayboxb1.jpg").name("Проектор Rombica Ray Box B1").build(),
 					ProductImage.builder().id(49L).path(PATH_FOR_PRODUCTS_IMAGE + "/43/rombicarayboxb1.jpg").name("Проектор Zodikam Z07A белый").build(),
-
 					ProductImage.builder().id(50L).path(PATH_FOR_PRODUCTS_IMAGE + "/44/playstation4slim.jpg").name("Игровая консоль PlayStation 4 Slim").build(),
 					ProductImage.builder().id(51L).path(PATH_FOR_PRODUCTS_IMAGE + "/45/playstation5digitaledition.jpg").name("Игровая консоль PlayStation 5 Digital Edition").build(),
 					ProductImage.builder().id(52L).path(PATH_FOR_PRODUCTS_IMAGE + "/46/battlefiedl1ps4.jpg").name("Игра Battlefield 1 (PS4)").build(),
 					ProductImage.builder().id(53L).path(PATH_FOR_PRODUCTS_IMAGE + "/47/microsoftxboxseriess.jpg").name("Игровая консоль Microsoft Xbox Series S").build(),
 					ProductImage.builder().id(54L).path(PATH_FOR_PRODUCTS_IMAGE + "/48/microsoftxboxseriess.jpg").name("Игровая консоль Microsoft Xbox Series X").build(),
 					ProductImage.builder().id(55L).path(PATH_FOR_PRODUCTS_IMAGE + "/49/eldenringxb.jpg").name("Игра Elden Ring – Launch Edition)").build(),
-
-
             };
 
             Product[] products = new Product[]{
@@ -290,7 +278,6 @@ public class StoreApplication implements WebMvcConfigurer {
 					Product.builder().id(40L).name("Телевизор LED DEXP A321").images(Collections.singletonList(images[44])).categories(new HashSet<Category>() {{
                         add(televisions[0]);
 					}}).price(BigDecimal.valueOf(10699.0)).quantity(2).build(),
-
 					Product.builder().id(41L).name("Домашний кинотеатр LG LHB655NK").images(Arrays.asList(images[45], images[46])).categories(new HashSet<Category>() {{
                         add(televisions[1]);
 					}}).price(BigDecimal.valueOf(10699.0)).quantity(2).build(),
