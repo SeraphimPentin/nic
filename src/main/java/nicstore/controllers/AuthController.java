@@ -39,13 +39,12 @@ public class AuthController {
         return authService.showUsers();
     }
 
-    @PostMapping( value = "/register", produces = "text/plain;charset=UTF-8")
-    public ResponseEntity<String> performRegistration(@RequestBody @Valid RegisterRequest registerRequest) {
+    @PostMapping( value = "/register")
+    public ResponseEntity<AuthenticationResponse> registration(@RequestBody @Valid RegisterRequest registerRequest) {
         return ResponseEntity.ok(authService.register(registerRequest));
     }
-    @PostMapping(value = "/login", produces = "text/plain;charset=UTF-8")
-    public ResponseEntity<?> performLogin(@RequestBody @Valid AuthenticationRequest loginRequest) throws AuthException {
-        authService.login(loginRequest);
-        return ResponseEntity.ok("Авторизация пройдена");
+    @PostMapping(value = "/login")
+    public ResponseEntity<AuthenticationResponse> login(@RequestBody @Valid AuthenticationRequest loginRequest) throws AuthException {
+        return ResponseEntity.ok(authService.login(loginRequest));
     }
 }

@@ -3,11 +3,11 @@ package nicstore.service;
 import lombok.RequiredArgsConstructor;
 import nicstore.Models.User;
 import nicstore.dto.auth.*;
+import nicstore.dto.mapper.ConvertorMapper;
 import nicstore.exceptions.auth.UserNotFoundException;
 import nicstore.security.jwt.JwtService;
-import nicstore.utils.FormValidator;
-import nicstore.utils.UserValidator;
-import org.modelmapper.ModelMapper;
+
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,11 +24,9 @@ public class AuthService {
 
 
     private final UserService userService;
-    private final UserValidator userValidator;
-    private final ModelMapper modelMapper;
-    private final FormValidator formValidator;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final ConvertorMapper mapper;
 
     public Authentication getCurrentAuthentication() {
         return SecurityContextHolder.getContext().getAuthentication();
@@ -51,7 +49,7 @@ public class AuthService {
         List<User> users = userService.findAllUsers();
         List<UserResponse> userRespons = new ArrayList<>();
         for (User user : users) {
-            UserResponse userResponse = convertToUserInfoResponse(user);
+            UserResponse userResponse = mapper.getMapper().map(user, UserResponse.class);
             userRespons.add(userResponse);
         }
         return userRespons;
@@ -62,25 +60,15 @@ public class AuthService {
         return userService.findUserByEmail(auth.getName()).getUsername();
     }
 
-
-//    public String register(RegisterRequest registerRequest, BindingResult bindingResult) {
-//        userValidator.validate(registerRequest, bindingResult);
-//        formValidator.checkFormBindingResult(bindingResult);
-//        User user = convertRegisterRequestToUser(registerRequest);
-//        userService.saveUser(user);
-//        return jwtUtil.generateToken(registerRequest.getEmail());
-//    }
-
-    public String register(@RequestBody RegisterRequest request) {
+    public AuthenticationResponse register(@RequestBody RegisterRequest request) {
 
         userService.emailAlreadyExist(request);
-        User user = convertRegisterRequestToUser(request);
+        User user = mapper.getMapper().map(request, User.class);
         userService.saveUser(user);
         String jwtToken = jwtService.generateToken(user);
-        return jwtToken;
-//        return AuthenticationResponse.builder()
-//                .token(jwtToken)
-//                .build();
+        return AuthenticationResponse.builder()
+                .token(jwtToken)
+                .build();
     }
 
     public AuthenticationResponse login(@RequestBody AuthenticationRequest request) {
@@ -95,13 +83,5 @@ public class AuthService {
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
-    }
-
-    private User convertRegisterRequestToUser(RegisterRequest registerRequest) {
-        return modelMapper.map(registerRequest, User.class);
-    }
-
-    public UserResponse convertToUserInfoResponse(User user) {
-        return modelMapper.map(user, UserResponse.class);
     }
 }
