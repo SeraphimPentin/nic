@@ -25,9 +25,4 @@ public interface RatingRepository  extends JpaRepository<Rating, Long> {
     Double calculateAverageRatingByProductId(@Param("productId") Long productId);
 
     Integer countRatingsByProduct(Product product);
-
-//    @Query(value = "SELECT AVG(r.value) FROM ratings r JOIN products_ratings pr ON r.id = pr.rating_id WHERE pr.product_id = ?1",
-//            nativeQuery = true)
-//    Double calculateAverageRatingByProductId(Long productId);
-
 }
