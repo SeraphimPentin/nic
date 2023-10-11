@@ -1,41 +1,3 @@
-#version: '3.8'
-#services:
-#
-#  postgres:
-#    image: 'postgres:15.4-alpine'
-#    env_file: .env
-#    restart: always
-#    environment:
-#      POSTGRES_DB: store_db
-#      POSTGRES_USER: postgres
-#      POSTGRES_PASSWORD: 12345^qwertY
-#    ports:
-#      - "5432:5432"
-#
-#  app:
-#    image: 'app:latest' # amazoncorretto:8
-#    container_name: nic-online-store
-#    env_file: .env
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    depends_on:
-#      - postgres
-#    links:
-#      - postgres
-#    ports:
-#      - "8080:8080"
-#    environment:
-#     - APPLICATION_PROPERTIES=$APPLICATION_PROPERTIES
-#    stdin_open: true
-#    tty: true
-#    volumes:
-#      - ./src/main/resources/static/images/products:/app/data/static/images/products
-#      - ./src/main/resources/static/images/reviews:/app/data/static/images/reviews
-#
-#volumes:
-#    postgres:
-
 version: '3.8'
 
 services:
@@ -51,21 +13,21 @@ services:
     depends_on:
       - postgres
     environment:
-      - APPLICATION_PROPERTIES=$APPLICATION_PROPERTIES
+      APPLICATION_PROPERTIES: $APPLICATION_PROPERTIES
     stdin_open: true
     tty: true
     volumes:
       - ./src/main/resources/static/images/products:/app/data/static/images/products
       - ./src/main/resources/static/images/reviews:/app/data/static/images/reviews
-#
+
   postgres:
     image: postgres:15.4-alpine
     container_name: 'postgres_container'
     ports:
-      - "5432:5432"
+      - 5432:5432
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=12345^qwertY
-      - POSTGRES_DB=store_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345^qwertY
+      POSTGRES_DB: store_db
     restart: always
 
