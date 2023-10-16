@@ -32,13 +32,8 @@ public class AuthService {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 
-    public User getCurrentAuthorizedUser() {
-        Authentication authentication = getCurrentAuthentication();
-        if (authentication != null && authentication.getPrincipal() != null)  {
-            return userService.findUserByEmail(getCurrentAuthentication().getName());
-        } else {
-            throw new UserNotFoundException("Пользоатель не найден");
-        }
+    public User getCurrentAuthorizedUser() throws UserNotFoundException {
+        return userService.findUserByEmail(getCurrentAuthentication().getName());
     }
 
     public List<User> showUsers() {
@@ -53,11 +48,6 @@ public class AuthService {
             userRespons.add(userResponse);
         }
         return userRespons;
-    }
-
-    public String getUsernameCurrentUser() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return userService.findUserByEmail(auth.getName()).getUsername();
     }
 
     public AuthenticationResponse register(@RequestBody RegisterRequest request) {
