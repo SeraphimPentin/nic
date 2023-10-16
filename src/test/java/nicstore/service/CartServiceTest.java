@@ -5,7 +5,6 @@ import nicstore.Models.Product;
 import nicstore.Models.User;
 import nicstore.exceptions.ProductAlreadyInCartException;
 import nicstore.repository.CartRepository;
-import nicstore.repository.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
