@@ -29,16 +29,9 @@ class CartServiceTest {
 
     @Mock
     private ProductService productService;
-
-    @Mock
-    private ProductRepository productRepository;
     @Mock
     private AuthService authService;
 
-    @Test
-    void showCartContent() {
-
-    }
 
     @Test
     public void testAddProductToCart() {
@@ -55,7 +48,6 @@ class CartServiceTest {
         verify(cartRepository).save(cart);
         assertTrue(items.containsKey(product));
         assertEquals(1, items.get(product));
-        // ItemAlreadyInCart
         items.put(product, 1);
         cart.setItems(items);
         when(authService.getCurrentAuthorizedUser()).thenReturn(user);
@@ -121,7 +113,4 @@ class CartServiceTest {
         verify(cartRepository).save(cart);
         assertFalse(items.containsKey(product));
     }
-
-
-
 }
