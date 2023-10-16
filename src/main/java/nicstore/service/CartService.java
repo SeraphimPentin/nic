@@ -48,7 +48,7 @@ public class CartService {
             Integer value = entry.getValue();
             content.put(productShortResponse, value);
         }
-        return new CartContentResponse(mapper.getMapper().map(user, UserResponse.class), content) ;
+        return new CartContentResponse(mapper.getMapper().map(user, UserResponse.class), content);
     }
 
     @Transactional
@@ -82,8 +82,9 @@ public class CartService {
             case "dec": {
                 if (quantityProductInCart == 1) {
                     cart.removeProductFromCart(product);
+                } else {
+                    cart.decProduct(product);
                 }
-                cart.decProduct(product);
             }
             break;
             default:
