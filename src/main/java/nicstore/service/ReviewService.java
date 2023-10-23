@@ -63,7 +63,7 @@ public class ReviewService {
         List<ProductImage> savedImages = new ArrayList<>();
         if (files != null && !files.isEmpty()) {
             String upperFolderPath = PATH_FOR_REVIEW_IMAGE;
-                String productIdPath = "/product" + productId;
+            String productIdPath = "/product" + productId;
             String userFolderName = "/user" + userId;
             String finalPath = upperFolderPath + File.separator + productIdPath + File.separator + userFolderName;
 
