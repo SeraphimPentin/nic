@@ -28,7 +28,7 @@ class ProductServiceTest {
     private ProductService productService;
 
     @Test
-    void findProductByIdTest() {
+    void testFindProductById() {
         Long existingProductId = 1L;
         Long noExistingProductId = 2L;
         Product product = new Product();
@@ -43,7 +43,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void findProductsByCategoryTest() {
+    void testFindProductsByCategory() {
         Category category = new Category();
         category.setId(1L);
         List<Product> products = new ArrayList<>();

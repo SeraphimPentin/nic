@@ -57,7 +57,7 @@ class CartServiceTest {
     }
 
     @Test
-    public void changeQuantityProductInCartIncTest() {
+    public void testChangeQuantityProductInCartInc() {
         Long productId = 222L;
         String operation = "inc";
         User user = new User();
@@ -76,7 +76,7 @@ class CartServiceTest {
     }
 
     @Test
-    public void changeQuantityProductInCartDecTest() {
+    public void testChangeQuantityProductInCartDec() {
         Long productId = 333L;
         String operation = "dec";
         User user = new User();

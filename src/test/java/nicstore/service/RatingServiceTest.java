@@ -25,7 +25,7 @@ class RatingServiceTest {
     private RatingRepository ratingRepository;
 
     @Test
-    void findRatingByUserAndProductTest() {
+    void testFindRatingByUserAndProduct() {
         User user = new User();
         Product product = new Product();
         Rating expectedRating = new Rating();
@@ -36,7 +36,7 @@ class RatingServiceTest {
     }
 
     @Test
-    void saveRatingTest() {
+    void testSaveRating() {
         User user = new User();
         Product product = new Product();
         Integer ratingValue = 3;
@@ -50,7 +50,7 @@ class RatingServiceTest {
     }
 
     @Test
-    void deleteRatingTest() {
+    void testDeleteRating() {
         Rating rating = new Rating();
         ArgumentCaptor<Rating> ratingArgumentCaptor = ArgumentCaptor.forClass(Rating.class);
         doNothing().when(ratingRepository).delete(ratingArgumentCaptor.capture());
