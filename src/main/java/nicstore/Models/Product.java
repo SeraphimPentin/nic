@@ -40,18 +40,12 @@ public class Product {
     private BigDecimal price;
 
 
-//    @Builder.Default
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ProductImage> images;
 
 
-//    @Builder.Default
     @ManyToMany( cascade = CascadeType.ALL)
     @JoinTable(name = "products_categories", joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
     private Set<Category> categories = new HashSet<>();
-
-    public void clearCategories() {
-        categories.clear();
-    }
 }

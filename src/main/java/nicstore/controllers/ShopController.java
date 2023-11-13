@@ -1,6 +1,7 @@
 package nicstore.controllers;
 
 import lombok.RequiredArgsConstructor;
+import nicstore.dto.cart.ResponseOrder;
 import nicstore.dto.product.*;
 import nicstore.service.CartService;
 import nicstore.service.ShopService;
@@ -81,5 +82,10 @@ public class ShopController {
     ) {
         shopService.setRatingOnProduct(productId, value);
         return ResponseEntity.ok(new RatingResponse(productId, value));
+    }
+
+    @GetMapping(path = "order")
+    public ResponseEntity<ResponseOrder> makeOrder() {
+        return ResponseEntity.ok(shopService.makeOrder());
     }
 }
