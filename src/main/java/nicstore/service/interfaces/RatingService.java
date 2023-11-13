@@ -9,20 +9,20 @@ import java.util.List;
 
 public interface RatingService {
 
-    public List<Rating> findRatingsByProduct(Product product);
+    List<Rating> findRatingsByProduct(Product product);
 
-    public Rating findRatingByUserAndProduct(User user, Product product);
+    Rating findRatingByUserAndProduct(User user, Product product);
 
-    public Integer findRatingsNumberByProduct(Product product);
+    Integer findRatingsNumberByProduct(Product product);
 
-    public Double findAverageRatingByProduct(Product product);
-
-    @Transactional
-    public void deleteRating(Rating rating);
+    Double findAverageRatingByProduct(Product product);
 
     @Transactional
-    public void updateRatingValueById(Rating rating, Integer ratingValue);
+    void deleteRating(Rating rating);
 
     @Transactional
-    public void saveRating(User user, Product product, Integer ratingValue);
+    void updateRatingValueById(Rating rating, Integer ratingValue);
+
+    @Transactional
+    void saveRating(User user, Product product, Integer ratingValue);
 }

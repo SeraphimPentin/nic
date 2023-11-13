@@ -29,8 +29,8 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ProductImageRepository productImageRepository;
     private final ImageAdapter imageAdapter;
-    private ReviewServiceImpl reviewService;
-    private RatingServiceImpl ratingService;
+    private final ReviewServiceImpl reviewService;
+    private final RatingServiceImpl ratingService;
 
     public Product findProductById(Long id) {
         return productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException("Товар не найден"));

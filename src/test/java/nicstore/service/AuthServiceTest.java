@@ -118,7 +118,6 @@ class AuthServiceTest {
 
     @Test
     public void testRegisterTOP() {
-        // Создаем тестовые данные
 //        RegisterRequest registerRequest = new RegisterRequest();
 //        registerRequest.setEmail("test@example.com");
 
