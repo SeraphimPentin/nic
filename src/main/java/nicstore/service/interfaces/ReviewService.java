@@ -1,4 +1,4 @@
-package nicstore.service.impl;
+package nicstore.service.interfaces;
 
 import nicstore.Models.Product;
 import nicstore.Models.ProductImage;
@@ -10,7 +10,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-public interface ReviewServiceImpl {
+public interface ReviewService {
 
     List<Review> findReviewsByProduct(Product product);
     Optional<Review> findReviewByUserAndProduct(User user, Product product);

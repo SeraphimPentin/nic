@@ -1,4 +1,4 @@
-package nicstore.service.impl;
+package nicstore.service.interfaces;
 
 import nicstore.Models.Product;
 import nicstore.Models.Rating;
@@ -7,7 +7,7 @@ import nicstore.Models.User;
 import javax.transaction.Transactional;
 import java.util.List;
 
-public interface RatingServiceImpl {
+public interface RatingService {
 
     public List<Rating> findRatingsByProduct(Product product);
 

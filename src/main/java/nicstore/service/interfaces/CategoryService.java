@@ -1,10 +1,10 @@
-package nicstore.service.impl;
+package nicstore.service.interfaces;
 
 import nicstore.Models.Category;
 import javax.transaction.Transactional;
 import java.util.List;
 
-public interface CategoryServiceImpl {
+public interface CategoryService {
     Category findCategoryById(Long id);
 
     List<Category> findSubcategoriesByParentCategory(Category parentCategory);

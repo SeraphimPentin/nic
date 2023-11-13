@@ -1,4 +1,4 @@
-package nicstore.service.impl;
+package nicstore.service.interfaces;
 
 import nicstore.Models.Cart;
 import nicstore.Models.Product;
@@ -7,7 +7,7 @@ import nicstore.dto.product.CartContentResponse;
 
 import javax.transaction.Transactional;
 
-public interface CartServiceImpl {
+public interface CartService {
 
     boolean productInCart(Cart cart, Product product);
 
