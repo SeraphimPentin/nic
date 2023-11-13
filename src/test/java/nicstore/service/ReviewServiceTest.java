@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 class ReviewServiceTest {
 
     @InjectMocks
-    ReviewService reviewService;
+    ReviewServiceImpl reviewService;
 
     @Mock
     ReviewRepository reviewRepository;

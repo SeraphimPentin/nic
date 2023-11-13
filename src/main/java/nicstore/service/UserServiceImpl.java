@@ -8,6 +8,7 @@ import nicstore.exceptions.auth.UserNotFoundException;
 import nicstore.repository.CartRepository;
 import nicstore.repository.UserRepository;
 import nicstore.security.Role;
+import nicstore.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-public class UserService {
+public class UserServiceImpl implements UserService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
@@ -24,7 +25,7 @@ public class UserService {
 
 
     @Autowired
-    public UserService(PasswordEncoder passwordEncoder, UserRepository userRepository, CartRepository cartRepository ) {
+    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, CartRepository cartRepository ) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.cartRepository = cartRepository;

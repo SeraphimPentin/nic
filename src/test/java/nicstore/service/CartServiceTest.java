@@ -21,15 +21,15 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class CartServiceTest {
     @InjectMocks
-    private CartService cartService;
+    private CartServiceImpl cartService;
 
     @Mock
     private CartRepository cartRepository;
 
     @Mock
-    private ProductService productService;
+    private ProductServiceImpl productService;
     @Mock
-    private AuthService authService;
+    private AuthServiceImpl authService;
 
 
     @Test

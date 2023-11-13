@@ -12,27 +12,25 @@ import nicstore.dto.product.ProductResponse;
 import nicstore.dto.product.ReviewResponse;
 import nicstore.exceptions.NotEnoughProductsInStockException;
 import nicstore.exceptions.ReviewNotExistingException;
-import nicstore.service.impl.ShopServiceImpl;
+import nicstore.service.interfaces.ShopService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class ShopService implements ShopServiceImpl {
+public class ShopServiceImpl implements ShopService {
 
-    private final CategoryService categoryService;
-    private final AuthService authService;
-    private final ProductService productService;
-    private final RatingService ratingService;
-    private final ReviewService reviewService;
+    private final CategoryServiceImpl categoryService;
+    private final AuthServiceImpl authService;
+    private final ProductServiceImpl productService;
+    private final RatingServiceImpl ratingService;
+    private final ReviewServiceImpl reviewService;
     private final ConvertorMapper mapper;
-    private final CartService cartService;
+    private final CartServiceImpl cartService;
 
 
     public ProductCharacteristicsResponse getProductPage(Long productId) {
@@ -113,7 +111,7 @@ public class ShopService implements ShopServiceImpl {
     }
 
 
-    private boolean checkProductsAvailability(CartContentResponse cartContent) {
+    public boolean checkProductsAvailability(CartContentResponse cartContent) {
         for (Map.Entry<ProductResponse, Integer> entry : cartContent.getItems().entrySet()) {
             ProductResponse product = entry.getKey();
             int cartQuantity = entry.getValue();
@@ -124,7 +122,7 @@ public class ShopService implements ShopServiceImpl {
         return true;
     }
 
-    private void updatingQuantityProductsInStock(CartContentResponse content) {
+    public void updatingQuantityProductsInStock(CartContentResponse content) {
         for (Map.Entry<ProductResponse, Integer> entry : content.getItems().entrySet()) {
             ProductResponse product = entry.getKey();
             int cartQuantity = entry.getValue();
@@ -133,9 +131,9 @@ public class ShopService implements ShopServiceImpl {
         }
     }
 
-    private ResponseTotalOrder createdOrderList(CartContentResponse content) {
+    public ResponseTotalOrder createdOrderList(CartContentResponse content) {
         List<ResponseOrderList> orderList = new ArrayList<>();
-        Double totalCost = 0D;
+        double totalCost = 0D;
         for (Map.Entry<ProductResponse, Integer> entry : content.getItems().entrySet()) {
             totalCost += entry.getValue() * entry.getKey().getPrice();
             ResponseOrderList listItem = ResponseOrderList.builder()
@@ -145,18 +143,17 @@ public class ShopService implements ShopServiceImpl {
                     .build();
             orderList.add(listItem);
         }
-
         return ResponseTotalOrder.builder()
                 .orderLists(orderList)
                 .totalCost(totalCost)
                 .build();
     }
 
-    private ResponseOrder sendOrderConfirmationEmail(CartContentResponse cartContent) {
+    public ResponseOrder sendOrderConfirmationEmail(CartContentResponse cartContent) {
         String email = cartContent.getUserResponse().getEmail();
         ResponseTotalOrder order = createdOrderList(cartContent);
-        String text = "Здравствуйте, " + cartContent.getUserResponse().getFirstname() + "!" +
-                "Ваш заказ: " + order.getOrderLists() + " итоговая стоимость: " + order.getTotalCost()+
+        String text = "Здравствуйте, " + cartContent.getUserResponse().getFirstname().toUpperCase() + "! " +
+                "Ваш заказ: " + order.getOrderLists().toString() + ". Итоговая стоимость за все товары: " + order.getTotalCost() + " ₽." +
                 " Ждем Вас еще!";
         return ResponseOrder.builder()
                 .email(email)
@@ -164,4 +161,3 @@ public class ShopService implements ShopServiceImpl {
                 .build();
     }
 }
-

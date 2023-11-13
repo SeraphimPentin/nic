@@ -5,6 +5,7 @@ import nicstore.Models.Product;
 import nicstore.Models.Rating;
 import nicstore.Models.User;
 import nicstore.repository.RatingRepository;
+import nicstore.service.interfaces.RatingService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -12,7 +13,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class RatingService {
+public class RatingServiceImpl implements RatingService {
 
     private final RatingRepository ratingRepository;
 

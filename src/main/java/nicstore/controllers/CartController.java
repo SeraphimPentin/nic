@@ -2,7 +2,8 @@ package nicstore.controllers;
 
 import lombok.RequiredArgsConstructor;
 import nicstore.dto.product.CartContentResponse;
-import nicstore.service.CartService;
+
+import nicstore.service.CartServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +15,7 @@ import javax.validation.Valid;
 public class CartController {
 
 
-    private final CartService cartService;
+    private final CartServiceImpl cartService;
 
 
     @GetMapping

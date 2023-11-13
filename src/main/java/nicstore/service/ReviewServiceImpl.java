@@ -7,6 +7,7 @@ import nicstore.Models.Review;
 import nicstore.Models.User;
 import nicstore.repository.ProductImageRepository;
 import nicstore.repository.ReviewRepository;
+import nicstore.service.interfaces.ReviewService;
 import nicstore.utils.ImageAdapter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class ReviewService {
+public class ReviewServiceImpl implements ReviewService {
 
     @Value("${path_for_review_image}")
     private String PATH_FOR_REVIEW_IMAGE;

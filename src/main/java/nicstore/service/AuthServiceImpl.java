@@ -8,6 +8,7 @@ import nicstore.exceptions.auth.UserNotFoundException;
 import nicstore.security.jwt.JwtService;
 
 
+import nicstore.service.interfaces.AuthService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,10 +21,10 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class AuthService {
+public class AuthServiceImpl implements AuthService {
 
 
-    private final UserService userService;
+    private final UserServiceImpl userService;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final ConvertorMapper mapper;

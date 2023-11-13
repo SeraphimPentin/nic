@@ -25,7 +25,7 @@ class ProductServiceTest {
     @Mock
     private ProductRepository productRepository;
     @InjectMocks
-    private ProductService productService;
+    private ProductServiceImpl productService;
 
     @Test
     void testFindProductById() {

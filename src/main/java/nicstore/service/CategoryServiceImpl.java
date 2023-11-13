@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import nicstore.Models.Category;
 import nicstore.exceptions.CategoryNotFoundException;
 import nicstore.repository.CategoryRepository;
+import nicstore.service.interfaces.CategoryService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CategoryService {
+public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
 

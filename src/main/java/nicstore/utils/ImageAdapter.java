@@ -1,7 +1,7 @@
 package nicstore.utils;
 
 import nicstore.exceptions.ImageUploadException;
-import nicstore.service.ReviewService;
+import nicstore.service.ReviewServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.*;
 import org.springframework.stereotype.Component;
@@ -15,7 +15,7 @@ import org.apache.commons.io.FileUtils;
 @Component
 public class ImageAdapter {
 
-    private static final Logger logger = LogManager.getLogger(ReviewService.class);
+    private static final Logger logger = LogManager.getLogger(ReviewServiceImpl.class);
 
 
     public void saveImage(MultipartFile file, String path, String fileName) {

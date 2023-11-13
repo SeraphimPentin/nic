@@ -3,8 +3,9 @@ package nicstore.controllers;
 import lombok.RequiredArgsConstructor;
 import nicstore.dto.cart.ResponseOrder;
 import nicstore.dto.product.*;
-import nicstore.service.CartService;
-import nicstore.service.ShopService;
+
+import nicstore.service.CartServiceImpl;
+import nicstore.service.ShopServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,8 +18,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ShopController {
 
-    private final ShopService shopService;
-    private final CartService cartService;
+    private final ShopServiceImpl shopService;
+    private final CartServiceImpl cartService;
 
 
     @PostMapping(path = "{productId}")

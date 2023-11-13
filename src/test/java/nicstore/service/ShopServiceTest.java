@@ -16,16 +16,19 @@ import static org.mockito.Mockito.*;
 class ShopServiceTest {
 
     @InjectMocks
-    ShopService shopService;
+    ShopServiceImpl shopService;
 
     @Mock
-    AuthService authService;
+    AuthServiceImpl authService;
 
     @Mock
-    ReviewService reviewService;
+    ReviewServiceImpl reviewService;
 
     @Mock
-    ProductService productService;
+    ProductServiceImpl productService;
+
+    @Mock
+    RatingServiceImpl ratingService;
 
     @Test
     void testSetReviewOnProduct() {
@@ -58,9 +61,26 @@ class ShopServiceTest {
 
     @Test
     void testSetRatingOnProduct() {
+        Product product = new Product();
+        User user = new User();
+        Integer value = 5;
+        ratingService.saveRating(user, product, value);
+        verify(ratingService).saveRating(user, product, value);
     }
 
     @Test
     void testDeleteRating() {
+        Long id = 123L;
+        Product product = new Product();
+        User user = new User();
+        Rating rating = new Rating();
+        when(productService.findProductById(id)).thenReturn(product);
+        when(authService.getCurrentAuthorizedUser()).thenReturn(user);
+        when(ratingService.findRatingByUserAndProduct(user, product)).thenReturn(rating);
+        shopService.deleteRating(id);
+        verify(productService).findProductById(id);
+        verify(authService).getCurrentAuthorizedUser();
+        verify(ratingService).findRatingByUserAndProduct(user, product);
+        verify(ratingService).deleteRating(rating);
     }
 }

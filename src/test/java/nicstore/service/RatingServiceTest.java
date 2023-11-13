@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 class RatingServiceTest {
 
     @InjectMocks
-    RatingService ratingService;
+    RatingServiceImpl ratingService;
 
     @Mock
     private RatingRepository ratingRepository;

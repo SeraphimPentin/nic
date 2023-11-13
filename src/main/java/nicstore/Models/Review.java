@@ -49,5 +49,4 @@ public class Review {
     @JoinTable(name = "users_reviews", joinColumns = @JoinColumn(name = "review_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
     private User user;
-
 }
