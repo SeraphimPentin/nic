@@ -2,7 +2,6 @@ package nicstore.dto.cart;
 
 import lombok.*;
 
-import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -14,4 +13,9 @@ public class ResponseOrderList {
     String name;
     Integer quantity;
     Double prise;
+
+    @Override
+    public String toString() {
+        return  name + " в количестве: " + quantity + " шт. Цена за один товар: " +  prise + " ₽";
+    }
 }
