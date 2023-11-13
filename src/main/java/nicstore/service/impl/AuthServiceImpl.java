@@ -1,0 +1,26 @@
+package nicstore.service.impl;
+
+import nicstore.Models.User;
+import nicstore.dto.auth.AuthenticationRequest;
+import nicstore.dto.auth.AuthenticationResponse;
+import nicstore.dto.auth.RegisterRequest;
+import nicstore.dto.auth.UserResponse;
+import nicstore.exceptions.auth.UserNotFoundException;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
+
+public interface AuthServiceImpl {
+    Authentication getCurrentAuthentication();
+
+    User getCurrentAuthorizedUser() throws UserNotFoundException;
+
+    List<User> showUsers();
+
+    List<UserResponse> showUserInfo();
+
+    AuthenticationResponse register(@RequestBody RegisterRequest request);
+
+    AuthenticationResponse login(@RequestBody AuthenticationRequest request);
+}
