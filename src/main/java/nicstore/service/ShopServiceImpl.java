@@ -126,8 +126,9 @@ public class ShopServiceImpl implements ShopService {
         for (Map.Entry<ProductResponse, Integer> entry : content.getItems().entrySet()) {
             ProductResponse product = entry.getKey();
             int cartQuantity = entry.getValue();
-            Integer quantityProductInStock = product.getQuantity();
-            productService.findProductById(product.getId()).setQuantity(quantityProductInStock - cartQuantity);
+            int quantityProductInStock = product.getQuantity();
+            int newQuantity = quantityProductInStock - cartQuantity;
+            productService.updateProductQuantity(product.getId(), newQuantity);
         }
     }
 

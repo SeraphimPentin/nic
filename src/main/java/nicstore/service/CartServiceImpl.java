@@ -44,7 +44,8 @@ public class CartServiceImpl implements CartService {
     }
 
     public void decProduct(Cart cart, Product product) {
-        cart.getItems().put(product, cart.getItems().get(product) + 1);
+        cart.getItems().put(product, cart.getItems().get(product) - 1);
+        product.setQuantity(product.getQuantity() + 1);
     }
 
     public Integer getQuantityProduct(Cart cart, Product product) {

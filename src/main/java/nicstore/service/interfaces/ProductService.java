@@ -9,6 +9,8 @@ public interface ProductService {
     Product findProductById(Long id);
 
     List<Product> findProductsByCategory(Category category);
+
+    void updateProductQuantity(Long productId, int newQuantity);
     @Transactional
     void saveProduct(Product product);
     @Transactional

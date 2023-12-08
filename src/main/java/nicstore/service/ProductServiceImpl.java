@@ -41,6 +41,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Transactional
+    public void updateProductQuantity(Long productId, int newQuantity) {
+        Product product = findProductById(productId);
+            product.setQuantity(newQuantity);
+            saveProduct(product);
+    }
+
+    @Transactional
     public void saveProduct(Product product) {
         productRepository.save(product);
     }
@@ -49,9 +56,9 @@ public class ProductServiceImpl implements ProductService {
         productImageRepository.deleteAll(product.getImages());
         imageAdapter.deleteFolder(PATH_FOR_PRODUCT_IMAGE + "/" + product.getId());
         product.getCategories().clear();
-        reviewService.findReviewsByProduct(product).forEach(review -> reviewService.deleteReview(review));// reviewService::deleteReview
+        reviewService.findReviewsByProduct(product).forEach(review -> reviewService.deleteReview(review));
         imageAdapter.deleteFolder(PATH_FOR_REVIEW_IMAGE + "/product" + product.getId());
-        ratingService.findRatingsByProduct(product).forEach(rating -> ratingService.deleteRating(rating)); //ratingService::deleteRating
+        ratingService.findRatingsByProduct(product).forEach(rating -> ratingService.deleteRating(rating));
         productRepository.delete(product);
     }
 }
