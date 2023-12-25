@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -43,7 +44,7 @@ class CartControllerTest {
         ResponseEntity<CartContentResponse> responseEntity = cartController.getCartContent();
 
         // Проверяем, что результат соответствует ожиданиям
-        assertEquals(userResponse, responseEntity.getBody().getUserResponse());
+        assertEquals(userResponse, Objects.requireNonNull(responseEntity.getBody()).getUserResponse());
 
         // Проверяем содержимое продуктов
         Map<ProductResponse, Integer> expectedProductContent = responseEntity.getBody().getItems();
