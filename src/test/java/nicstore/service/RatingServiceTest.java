@@ -1,8 +1,8 @@
 package nicstore.service;
 
-import nicstore.Models.Product;
-import nicstore.Models.Rating;
-import nicstore.Models.User;
+import nicstore.models.Product;
+import nicstore.models.Rating;
+import nicstore.models.User;
 import nicstore.repository.RatingRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

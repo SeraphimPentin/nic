@@ -1,9 +1,9 @@
 package nicstore.service.interfaces;
 
-import nicstore.Models.Product;
-import nicstore.Models.ProductImage;
-import nicstore.Models.Review;
-import nicstore.Models.User;
+import nicstore.models.Product;
+import nicstore.models.ProductImage;
+import nicstore.models.Review;
+import nicstore.models.User;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;

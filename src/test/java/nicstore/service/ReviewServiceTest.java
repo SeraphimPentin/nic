@@ -1,6 +1,6 @@
 package nicstore.service;
 
-import nicstore.Models.*;
+import nicstore.models.*;
 
 import nicstore.repository.ProductImageRepository;
 import nicstore.repository.ReviewRepository;

@@ -1,7 +1,7 @@
 package nicstore.service;
 
-import nicstore.Models.Cart;
-import nicstore.Models.User;
+import nicstore.models.Cart;
+import nicstore.models.User;
 import nicstore.exceptions.auth.UserNotFoundException;
 import nicstore.repository.CartRepository;
 import nicstore.repository.UserRepository;

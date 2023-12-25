@@ -1,8 +1,8 @@
 package nicstore;
 
-import nicstore.Models.Category;
-import nicstore.Models.Product;
-import nicstore.Models.ProductImage;
+import nicstore.models.Category;
+import nicstore.models.Product;
+import nicstore.models.ProductImage;
 import nicstore.repository.CategoryRepository;
 import nicstore.repository.ProductImageRepository;
 import nicstore.repository.ProductRepository;

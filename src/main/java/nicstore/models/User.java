@@ -1,4 +1,4 @@
-package nicstore.Models;
+package nicstore.models;
 
 
 import javax.persistence.*;

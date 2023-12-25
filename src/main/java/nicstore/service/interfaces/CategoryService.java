@@ -1,6 +1,6 @@
 package nicstore.service.interfaces;
 
-import nicstore.Models.Category;
+import nicstore.models.Category;
 import javax.transaction.Transactional;
 import java.util.List;
 

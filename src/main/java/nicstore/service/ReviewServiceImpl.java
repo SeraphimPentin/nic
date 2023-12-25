@@ -1,10 +1,10 @@
 package nicstore.service;
 
 import lombok.RequiredArgsConstructor;
-import nicstore.Models.Product;
-import nicstore.Models.ProductImage;
-import nicstore.Models.Review;
-import nicstore.Models.User;
+import nicstore.models.Product;
+import nicstore.models.ProductImage;
+import nicstore.models.Review;
+import nicstore.models.User;
 import nicstore.repository.ProductImageRepository;
 import nicstore.repository.ReviewRepository;
 import nicstore.service.interfaces.ReviewService;

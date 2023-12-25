@@ -1,7 +1,7 @@
 package nicstore.service;
 
 import lombok.RequiredArgsConstructor;
-import nicstore.Models.Category;
+import nicstore.models.Category;
 import nicstore.exceptions.CategoryNotFoundException;
 import nicstore.repository.CategoryRepository;
 import nicstore.service.interfaces.CategoryService;

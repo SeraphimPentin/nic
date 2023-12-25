@@ -1,9 +1,9 @@
 package nicstore.service;
 
 import lombok.RequiredArgsConstructor;
-import nicstore.Models.Cart;
-import nicstore.Models.Product;
-import nicstore.Models.User;
+import nicstore.models.Cart;
+import nicstore.models.Product;
+import nicstore.models.User;
 import nicstore.dto.auth.UserResponse;
 import nicstore.dto.mapper.ConvertorMapper;
 import nicstore.dto.product.CartContentResponse;

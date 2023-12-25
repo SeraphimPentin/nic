@@ -1,7 +1,7 @@
 package nicstore.service;
 
 import lombok.RequiredArgsConstructor;
-import nicstore.Models.User;
+import nicstore.models.User;
 import nicstore.dto.auth.*;
 import nicstore.dto.mapper.ConvertorMapper;
 import nicstore.exceptions.auth.UserNotFoundException;

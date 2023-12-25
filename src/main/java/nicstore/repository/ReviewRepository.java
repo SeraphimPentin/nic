@@ -1,8 +1,8 @@
 package nicstore.repository;
 
-import nicstore.Models.Product;
-import nicstore.Models.Review;
-import nicstore.Models.User;
+import nicstore.models.Product;
+import nicstore.models.Review;
+import nicstore.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

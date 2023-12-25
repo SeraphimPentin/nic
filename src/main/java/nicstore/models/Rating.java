@@ -1,4 +1,4 @@
-package nicstore.Models;
+package nicstore.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

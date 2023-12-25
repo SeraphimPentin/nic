@@ -1,9 +1,9 @@
 package nicstore.service;
 
 import lombok.RequiredArgsConstructor;
-import nicstore.Models.Product;
-import nicstore.Models.Rating;
-import nicstore.Models.User;
+import nicstore.models.Product;
+import nicstore.models.Rating;
+import nicstore.models.User;
 import nicstore.repository.RatingRepository;
 import nicstore.service.interfaces.RatingService;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package nicstore.service.interfaces;
 
-import nicstore.Models.User;
+import nicstore.models.User;
 import nicstore.dto.auth.AuthenticationRequest;
 import nicstore.dto.auth.AuthenticationResponse;
 import nicstore.dto.auth.RegisterRequest;

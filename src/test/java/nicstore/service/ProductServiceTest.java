@@ -1,7 +1,7 @@
  package nicstore.service;
 
-import nicstore.Models.Category;
-import nicstore.Models.Product;
+import nicstore.models.Category;
+import nicstore.models.Product;
 import nicstore.repository.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

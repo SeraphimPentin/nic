@@ -1,7 +1,6 @@
 package nicstore.controllers;
 
-
-import nicstore.Models.User;
+import nicstore.models.User;
 import nicstore.dto.auth.*;
 import nicstore.service.AuthServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

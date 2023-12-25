@@ -1,8 +1,8 @@
 package nicstore.service;
 
 import lombok.RequiredArgsConstructor;
-import nicstore.Models.Category;
-import nicstore.Models.Product;
+import nicstore.models.Category;
+import nicstore.models.Product;
 import nicstore.exceptions.ProductNotFoundException;
 import nicstore.repository.ProductImageRepository;
 import nicstore.repository.ProductRepository;

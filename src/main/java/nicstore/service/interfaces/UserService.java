@@ -1,6 +1,6 @@
 package nicstore.service.interfaces;
 
-import nicstore.Models.User;
+import nicstore.models.User;
 import nicstore.dto.auth.RegisterRequest;
 import javax.transaction.Transactional;
 import java.util.List;

@@ -1,8 +1,8 @@
 package nicstore.service.interfaces;
 
-import nicstore.Models.Product;
-import nicstore.Models.Rating;
-import nicstore.Models.User;
+import nicstore.models.Product;
+import nicstore.models.Rating;
+import nicstore.models.User;
 
 import javax.transaction.Transactional;
 import java.util.List;

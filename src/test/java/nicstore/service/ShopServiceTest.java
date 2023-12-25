@@ -1,6 +1,6 @@
 package nicstore.service;
 
-import nicstore.Models.*;
+import nicstore.models.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

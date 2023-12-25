@@ -1,8 +1,8 @@
 package nicstore.service.interfaces;
 
-import nicstore.Models.Cart;
-import nicstore.Models.Product;
-import nicstore.Models.User;
+import nicstore.models.Cart;
+import nicstore.models.Product;
+import nicstore.models.User;
 import nicstore.dto.product.CartContentResponse;
 
 import javax.transaction.Transactional;
