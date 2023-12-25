@@ -1,21 +1,21 @@
 package nicstore.controllers;
 
+import nicstore.dto.auth.AuthenticationRequest;
+import nicstore.dto.auth.AuthenticationResponse;
 import nicstore.dto.auth.RegisterRequest;
-
+import nicstore.models.User;
 import nicstore.service.AuthServiceImpl;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class AuthControllerTest {
@@ -25,47 +25,75 @@ class AuthControllerTest {
     @Mock
     private AuthServiceImpl authService;
 
-    @BeforeEach
-    void setUp() {
-    }
+    @Test
+    void testGetCurrentAuthorizedUser() {
+        // Создаем заглушку пользователя
+        User dummyUser = new User();
+        dummyUser.setEmail("test@mail.com");
 
-    @AfterEach
-    void tearDown() {
+        // Мокируем метод getCurrentAuthorizedUser
+        Mockito.when(authService.getCurrentAuthorizedUser()).thenReturn(dummyUser);
+
+        // Вызываем метод контроллера
+        String result = authController.getCurrentAuthorizedUser();
+
+        // Проверяем, что результат соответствует ожиданиям
+        assertEquals("test@mail.com", result);
     }
 
     @Test
-    void getCurrentAuthorizedUser() {
-    }
+    void testShowUser() {
+        List<User> dummyUsers = new ArrayList<>();
+        dummyUsers.add(new User());
+        dummyUsers.add(new User());
+        Mockito.when(authService.showUsers()).thenReturn(dummyUsers);
+        List<User> result = authController.showUser();
 
-    @Test
-    void showUserInfo() {
+        assertEquals(dummyUsers, result);
     }
-
-    @Test
-    void showUser() {
-    }
-
-    //public ResponseEntity<AuthenticationResponse> registration(@RequestBody @Valid RegisterRequest registerRequest) {
-    //   return ResponseEntity.ok(authService.register(registerRequest));
     @Test
     void testRegistration() {
-        RegisterRequest registerRequest = RegisterRequest.builder()
-                .email("who")
-                .password("password")
-                .firstname("user")
-                .lastname("user")
+        // Создаем заглушку запроса на регистрацию
+        RegisterRequest registerRequest = new RegisterRequest();
+        registerRequest.setFirstname("John");
+        registerRequest.setLastname("Doe");
+        registerRequest.setEmail("john.doe@example.com");
+        registerRequest.setPassword("password");
+
+        // Создаем заглушку ответа
+        AuthenticationResponse dummyResponse = AuthenticationResponse.builder()
+                .token("dummyToken")
                 .build();
 
-//        doThrow(new UserAlreadyExistException("Пользвоатель с почтой " + registerRequest.getEmail() + " уже зарегистрирован")).when(authService).register(registerRequest);
-        Mockito.doNothing().when(authService).register(registerRequest);
+        // Мокируем метод register
+        Mockito.when(authService.register(registerRequest)).thenReturn(dummyResponse);
 
-        ResponseEntity<?> responseEntity = authController.registration(registerRequest);
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals(anyString(), responseEntity.getBody());
-        verify(authService).register(registerRequest);
+        // Вызываем метод контроллера
+        ResponseEntity<AuthenticationResponse> responseEntity = authController.registration(registerRequest);
+
+        // Проверяем, что результат соответствует ожиданиям
+        assertEquals(dummyResponse, responseEntity.getBody());
     }
 
     @Test
-    void login() {
+    void testLogin() {
+        // Создаем заглушку запроса на вход
+        AuthenticationRequest loginRequest = new AuthenticationRequest();
+        loginRequest.setEmail("john.doe@example.com");
+        loginRequest.setPassword("password");
+
+        // Создаем заглушку ответа
+        AuthenticationResponse dummyResponse = AuthenticationResponse.builder()
+                .token("dummyToken")
+                .build();
+
+        // Мокируем метод login
+        Mockito.when(authService.login(loginRequest)).thenReturn(dummyResponse);
+
+        // Вызываем метод контроллера
+        ResponseEntity<AuthenticationResponse> responseEntity = authController.login(loginRequest);
+
+        // Проверяем, что результат соответствует ожиданиям
+        assertEquals(dummyResponse, responseEntity.getBody());
     }
 }
