@@ -32,4 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 
-applocation.properties.inner
+/applocation.properties.inner/
