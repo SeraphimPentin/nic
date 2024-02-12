@@ -2,8 +2,6 @@ package nicstore.service;
 
 import nicstore.models.Cart;
 import nicstore.models.User;
-import nicstore.dto.auth.RegisterRequest;
-import nicstore.exceptions.auth.UserAlreadyExistException;
 import nicstore.exceptions.auth.UserNotFoundException;
 import nicstore.repository.CartRepository;
 import nicstore.repository.UserRepository;
