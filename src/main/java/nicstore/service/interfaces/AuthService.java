@@ -6,6 +6,7 @@ import nicstore.dto.auth.AuthenticationResponse;
 import nicstore.dto.auth.RegisterRequest;
 import nicstore.dto.auth.UserResponse;
 import nicstore.exceptions.auth.UserNotFoundException;
+import nicstore.exceptions.auth.RegisterValidationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -20,7 +21,7 @@ public interface AuthService {
 
     List<UserResponse> showUserInfo();
 
-    AuthenticationResponse register(@RequestBody RegisterRequest request);
+    AuthenticationResponse register(@RequestBody RegisterRequest request) throws RegisterValidationException;
 
     AuthenticationResponse login(@RequestBody AuthenticationRequest request);
 }

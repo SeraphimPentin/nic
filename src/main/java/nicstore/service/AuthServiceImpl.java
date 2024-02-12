@@ -53,7 +53,6 @@ public class AuthServiceImpl implements AuthService {
 
     public AuthenticationResponse register(@RequestBody RegisterRequest request) {
 
-        userService.emailAlreadyExist(request);
         User user = mapper.getMapper().map(request, User.class);
         userService.saveUser(user);
         String jwtToken = jwtService.generateToken(user);

@@ -12,10 +12,13 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
 class AuthControllerTest {
@@ -24,7 +27,6 @@ class AuthControllerTest {
     private AuthController authController;
     @Mock
     private AuthServiceImpl authService;
-
     @Test
     void testGetCurrentAuthorizedUser() {
         // Создаем заглушку пользователя
@@ -34,7 +36,6 @@ class AuthControllerTest {
         // Мокируем метод getCurrentAuthorizedUser
         Mockito.when(authService.getCurrentAuthorizedUser()).thenReturn(dummyUser);
 
-        // Вызываем метод контроллера
         String result = authController.getCurrentAuthorizedUser();
 
         // Проверяем, что результат соответствует ожиданиям
@@ -54,6 +55,7 @@ class AuthControllerTest {
     @Test
     void testRegistration() {
         // Создаем заглушку запроса на регистрацию
+        BindingResult bindingResult = mock(BindingResult.class);
         RegisterRequest registerRequest = new RegisterRequest();
         registerRequest.setFirstname("John");
         registerRequest.setLastname("Doe");
@@ -69,8 +71,7 @@ class AuthControllerTest {
         Mockito.when(authService.register(registerRequest)).thenReturn(dummyResponse);
 
         // Вызываем метод контроллера
-        ResponseEntity<AuthenticationResponse> responseEntity = authController.registration(registerRequest);
-
+        ResponseEntity<?> responseEntity = authController.registration(registerRequest, bindingResult);
         // Проверяем, что результат соответствует ожиданиям
         assertEquals(dummyResponse, responseEntity.getBody());
     }

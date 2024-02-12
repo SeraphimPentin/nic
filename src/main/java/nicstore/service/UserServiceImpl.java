@@ -25,23 +25,17 @@ public class UserServiceImpl implements UserService {
 
 
     @Autowired
-    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, CartRepository cartRepository ) {
+    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, CartRepository cartRepository) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.cartRepository = cartRepository;
     }
 
-    public void emailAlreadyExist(RegisterRequest registerRequest){
-       if (userRepository.findUserByEmail(registerRequest.getEmail()).isPresent()){
-           throw new UserAlreadyExistException("Пользвоатель с почтой " + registerRequest.getEmail() + " уже зарегистрирован");
-       }
+    public User findUserByEmail(String email) {
+        return userRepository.findUserByEmail(email).orElseThrow(() -> new UserNotFoundException("Пользователь с email " + email + " не найден"));
     }
 
-    public User findUserByEmail(String email){
-        return userRepository.findUserByEmail(email).orElseThrow(()-> new UserNotFoundException("Пользователь с email " + email + " не найден"));
-    }
-
-    public List<User> findAllUsers(){
+    public List<User> findAllUsers() {
         return userRepository.findAll();
     }
 

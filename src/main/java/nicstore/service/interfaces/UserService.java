@@ -1,13 +1,10 @@
 package nicstore.service.interfaces;
 
 import nicstore.models.User;
-import nicstore.dto.auth.RegisterRequest;
 import javax.transaction.Transactional;
 import java.util.List;
 
 public interface UserService {
-
-    void emailAlreadyExist(RegisterRequest registerRequest);
 
     User findUserByEmail(String email);
 
