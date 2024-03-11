@@ -31,11 +31,9 @@ public class Product {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @NotBlank
     @Column(nullable = false)
     private Integer quantity;
 
-    @NotBlank
     @Column(nullable = false)
     private BigDecimal price;
 

@@ -15,7 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.Max;
 
 @Entity
 @Getter
@@ -31,7 +31,7 @@ public class Rating {
     private Long id;
 
     @Column(nullable = false)
-    @Size(max = 5)
+    @Max(5)
     private Integer value;
 
     @ManyToOne

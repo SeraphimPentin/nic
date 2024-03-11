@@ -17,10 +17,11 @@ public class AuthenticationRequest {
 
     @NotBlank(message = "Email не указан")
     @Size(max = 100, message = "Максимум 100 символов")
-    @Email
+    @Email(message = "Поле email должен иметь формат адреса электронной почты")
     private String email;
 
     @NotBlank(message = "Поле для пароля не может быть пустым")
-    @Size(max = 100, message = "Максимум 100 символов")
+    @Size(min = 8, message = "Пароль должен быть не меньше 8 символов")
+    @Size(max = 100, message = "Пароль максимум 100 символов")
     private String password;
 }

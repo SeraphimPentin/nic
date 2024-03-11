@@ -27,21 +27,16 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Введите имя")
-    @Size(max = 100, message = "Максимум 100 символов")
+    @Column(nullable = false)
     private String firstname;
 
-    @NotBlank(message = "Введите фамилию")
-    @Size(max = 100, message = "Максимум 100 символов")
+    @Column(nullable = false)
     private String lastname;
 
-    @NotBlank(message = "Email не указан")
-    @Size(max = 100, message = "Максимум 100 символов")
-    @Email
+    @Column(unique = true, nullable = false)
     private String email;
 
-    @NotBlank(message = "Поле для пароля не может быть пустым")
-    @Size(max = 100, message = "Максимум 100 символов")
+    @Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)

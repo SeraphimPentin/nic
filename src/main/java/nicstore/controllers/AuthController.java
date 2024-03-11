@@ -3,27 +3,25 @@ package nicstore.controllers;
 import nicstore.models.User;
 import nicstore.dto.auth.*;
 import nicstore.service.AuthServiceImpl;
-import nicstore.utils.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 
 import javax.validation.Valid;
 import java.util.List;
 
-
+@Validated
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
     private final AuthServiceImpl authService;
-    private final UserValidator userValidator;
 
     @Autowired
-    public AuthController(AuthServiceImpl authService, UserValidator userValidator) {
+    public AuthController(AuthServiceImpl authService) {
         this.authService = authService;
-        this.userValidator = userValidator;
     }
 
     @GetMapping("/show-authorized-user")
@@ -42,8 +40,7 @@ public class AuthController {
     }
 
     @PostMapping( value = "/register")
-    public ResponseEntity<AuthenticationResponse> registration(@RequestBody @Valid RegisterRequest registerRequest, BindingResult bindingResult) {
-        userValidator.validate(registerRequest, bindingResult);
+    public ResponseEntity<AuthenticationResponse> registration(@RequestBody @Valid RegisterRequest registerRequest) {
         return ResponseEntity.ok(authService.register(registerRequest));
     }
     @PostMapping(value = "/login")

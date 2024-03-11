@@ -113,7 +113,7 @@ public class CartServiceImpl implements CartService {
             }
             break;
             default:
-                throw new BadOperationException("Не известная команда");
+                throw new BadOperationException("Неизвестная команда");
         }
         cartRepository.save(cart);
     }

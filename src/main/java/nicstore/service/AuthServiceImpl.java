@@ -23,7 +23,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
-
     private final UserServiceImpl userService;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -52,7 +51,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     public AuthenticationResponse register(@RequestBody RegisterRequest request) {
-
+        userService.userNotExist(request.getEmail());
         User user = mapper.getMapper().map(request, User.class);
         userService.saveUser(user);
         String jwtToken = jwtService.generateToken(user);

@@ -71,7 +71,7 @@ class AuthControllerTest {
         Mockito.when(authService.register(registerRequest)).thenReturn(dummyResponse);
 
         // Вызываем метод контроллера
-        ResponseEntity<?> responseEntity = authController.registration(registerRequest, bindingResult);
+        ResponseEntity<?> responseEntity = authController.registration(registerRequest);
         // Проверяем, что результат соответствует ожиданиям
         assertEquals(dummyResponse, responseEntity.getBody());
     }
