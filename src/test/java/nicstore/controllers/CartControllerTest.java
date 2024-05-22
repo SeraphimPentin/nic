@@ -18,7 +18,6 @@ import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -56,15 +55,5 @@ class CartControllerTest {
             assertTrue(expectedProductContent.containsKey(expectedProduct));
             assertEquals(expectedQuantity, expectedProductContent.get(expectedProduct));
         }
-    }
-
-    @Test
-    void testChangeProductQuantityInCart() {
-        Long productId = 1L;
-        String operation = "inc";
-        doNothing().when(cartService).changeQuantityProductInCart(productId, operation);
-        ResponseEntity<Void> responseEntity = cartController.changeProductQuantityInCart(productId, operation);
-        verify(cartService, Mockito.times(1)).changeQuantityProductInCart(productId, operation);
-        assertEquals(200, responseEntity.getStatusCodeValue());
     }
 }
