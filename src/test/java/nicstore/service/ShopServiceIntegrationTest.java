@@ -27,14 +27,17 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import org.springframework.test.annotation.DirtiesContext;
 
 @SpringBootTest(classes = StoreApplication.class)
 @TestPropertySource(
         locations = "classpath:application-integration.properties")
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class ShopServiceIntegrationTest {
 
     private final ShopService shopService;
@@ -70,7 +73,7 @@ public class ShopServiceIntegrationTest {
     @BeforeEach
     void setUp() {
         product = productRepository.save(Product.builder()
-                .name("Product name")
+                .name("Product name " + UUID.randomUUID())
                 .description("Description")
                 .price(BigDecimal.valueOf(25))
                 .quantity(4)
